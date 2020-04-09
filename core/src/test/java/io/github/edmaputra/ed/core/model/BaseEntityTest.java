@@ -12,8 +12,6 @@ class BaseEntityTest {
   BaseEntityImpl baseEntity, baseEntityWithData;
 
   private static final String DEFAULT_VERSION = "1";
-  private static final Instant DEFAULT_CREATION_TIME = Instant.now();
-  private static final Instant DEFAULT_UPDATE_TIME = Instant.now();
   private static final String DEFAULT_CREATOR = "";
   private static final String DEFAULT_UPDATER = "";
   private static final boolean DEFAULT_RECORDED = true;
@@ -73,6 +71,17 @@ class BaseEntityTest {
 
     assertThat(baseEntity.getCreateTime()).isEqualTo(time);
     assertThat(baseEntity.getUpdateTime()).isEqualTo(time);
+  }
+
+  private static class BaseEntityImpl extends BaseEntity {
+
+    public BaseEntityImpl() {
+      super();
+    }
+
+    public BaseEntityImpl(String version, Instant createdOn, String creator, Instant updatedOn, String updater, boolean recorded) {
+      super(version, createdOn, creator, updatedOn, updater, recorded);
+    }
   }
 
 }

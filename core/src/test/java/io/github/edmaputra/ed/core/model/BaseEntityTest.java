@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BaseEntityTest {
 
-  BaseEntityImpl baseEntity, baseEntityWithData;
+  private BaseEntity baseEntity, baseEntityWithData;
 
   private static final String DEFAULT_VERSION = "1";
   private static final String DEFAULT_CREATOR = "";

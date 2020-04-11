@@ -4,7 +4,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.time.Instant;
-import java.util.UUID;
 
 @MappedSuperclass
 public abstract class BaseIdEntity<T> extends BaseEntity {

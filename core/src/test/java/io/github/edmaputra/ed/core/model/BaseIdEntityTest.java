@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BaseIdEntityTest {
 
-  private BaseIdEntityImpl impl;
+  private BaseIdEntity impl;
 
   private final static UUID ID = UUID.randomUUID();
   private static final String DEFAULT_VERSION = "1";
@@ -34,7 +34,7 @@ class BaseIdEntityTest {
   void givenBaseIdEntityImpl_whenSetId_thenShouldReturnExpectedValue() {
     impl.setId(ID);
 
-    assertThat(impl.getId()).isEqualByComparingTo(ID);
+    assertThat(impl.getId()).isEqualTo(ID);
     assertDefaultValue(impl);
   }
 

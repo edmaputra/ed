@@ -1,5 +1,11 @@
 package io.github.edmaputra.ed.core.constant;
 
+/**
+ * Constant object especially for Database Column Length
+ *
+ * @author edmaputra
+ * @since 0.0.1
+ */
 public class DbColumn {
 
   public static final int NAME_LENGTH = 120;

@@ -3,8 +3,17 @@ package io.github.edmaputra.ed.core.model;
 import io.github.edmaputra.ed.core.constant.DbColumn;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 import java.time.LocalDate;
 
+/**
+ * The abstract of Person object
+ *
+ * @author edmaputra
+ * @since 0.0.1
+ * @param <T>
+ */
+@MappedSuperclass
 public abstract class Person<T> extends BaseIdEntity<T> {
 
   @Column(length = DbColumn.NAME_LENGTH, nullable = false)

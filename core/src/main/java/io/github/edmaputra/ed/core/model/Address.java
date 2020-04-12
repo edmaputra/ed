@@ -5,6 +5,13 @@ import io.github.edmaputra.ed.core.constant.DbColumn;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
+/**
+ * The abstract of Address object
+ *
+ * @author edmaputra
+ * @since 0.0.1
+ * @param <T> type of Id
+ */
 @MappedSuperclass
 public abstract class Address<T> extends BaseIdEntity<T> {
 

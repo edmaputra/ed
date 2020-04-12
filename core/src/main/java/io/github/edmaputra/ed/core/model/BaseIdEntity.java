@@ -5,6 +5,13 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.time.Instant;
 
+/**
+ * Base Entity with Id
+ *
+ * @author edmaputra
+ * @since 0.0.1
+ * @param <T> type of Id
+ */
 @MappedSuperclass
 public abstract class BaseIdEntity<T> extends BaseEntity {
 

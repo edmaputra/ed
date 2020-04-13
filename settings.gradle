@@ -2,3 +2,5 @@ rootProject.name = 'ed'
 
 include('core')
 project(':core').projectDir = file('core')
+include 'data'
+project(':data').projectDir = file('data')

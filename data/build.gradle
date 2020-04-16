@@ -1,7 +1,6 @@
 plugins {
   id 'org.springframework.boot' version "${springBootVersion}"
   id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-  id 'java'
 }
 
 dependencies {
@@ -11,7 +10,5 @@ dependencies {
   testImplementation('org.springframework.boot:spring-boot-starter-test') {
     exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
   }
-  testImplementation 'com.h2database:h2:1.4.199'
-  testImplementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
-
+  testImplementation "com.h2database:h2"
 }

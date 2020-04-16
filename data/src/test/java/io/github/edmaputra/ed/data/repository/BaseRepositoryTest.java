@@ -1,7 +1,6 @@
 package io.github.edmaputra.ed.data.repository;
 
-import io.github.edmaputra.ed.core.model.Gender;
-import io.github.edmaputra.ed.core.model.MaritalStatus;
+import io.github.edmaputra.ed.data.DataInit;
 import io.github.edmaputra.ed.data.Employee;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.data.domain.Pageable;
-
-import java.time.LocalDate;
-import java.time.Month;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,38 +25,10 @@ public class BaseRepositoryTest {
 
   @BeforeEach
   public void init() {
-    e1 = new Employee("Bangun",
-        "Edma",
-        "Saputra",
-        Gender.MALE,
-        MaritalStatus.MARRIED,
-        "Kota Bangun",
-        LocalDate.of(1990, Month.AUGUST, 1),
-        "085112345678",
-        "bangun.edma.saputra@gmail.com"
-    );
-
-    e2 = new Employee("Rina",
-        "",
-        "Wibowo",
-        Gender.FEMALE,
-        MaritalStatus.SINGLE,
-        "Bandung",
-        LocalDate.of(1991, Month.SEPTEMBER, 5),
-        "08520987654",
-        "rina.wibowo@mail.com"
-    );
-
-    e3 = new Employee("Alex",
-        "Maningger",
-        "Sanchez",
-        Gender.MALE,
-        MaritalStatus.DIVORCEE,
-        "Espanyol",
-        LocalDate.of(1988, Month.FEBRUARY, 16),
-        "085555550000",
-        "maningger@mail.com"
-    );
+    DataInit init = new DataInit();
+    e1 = init.getEmployee(0);
+    e2 = init.getEmployee(1);
+    e3 = init.getEmployee(2);
 
     testEntityManager.persist(e1);
     testEntityManager.persist(e2);
@@ -69,19 +37,42 @@ public class BaseRepositoryTest {
 
   @Test
   void givenEmployeeList_whenFindByRecordedTrue_thenShouldReturnCorrectSize() {
-    assertListSize(3);
+    assertListSizeWithRecordedIsTrue(3);
 
     setRecorded(false, e1);
-    assertListSize(2);
+    assertListSizeWithRecordedIsTrue(2);
 
     setRecorded(false, e2);
-    assertListSize(1);
+    assertListSizeWithRecordedIsTrue(1);
 
     setRecorded(false, e3);
-    assertListSize(0);
+    assertListSizeWithRecordedIsTrue(0);
 
     setRecorded(true, e1, e2, e3);
-    assertListSize(3);
+    assertListSizeWithRecordedIsTrue(3);
+  }
+
+  @Test
+  void givenEmployeeList_whenFindByRecorded_thenShouldReturnCorrectSize() {
+    assertListSizeWithRecorded(true, 3);
+    assertListSizeWithRecorded(false, 0);
+
+    setRecorded(false, e1);
+    assertListSizeWithRecorded(true, 2);
+    assertListSizeWithRecorded(false, 1);
+
+    setRecorded(false, e2);
+    assertListSizeWithRecorded(true, 1);
+    assertListSizeWithRecorded(false, 2);
+
+    setRecorded(false, e3);
+    assertListSizeWithRecorded(true, 0);
+    assertListSizeWithRecorded(false, 3);
+
+    setRecorded(true, e1, e2, e3);
+    assertListSizeWithRecorded(true, 3);
+    assertListSizeWithRecorded(false, 0);
+
   }
 
   @AfterEach
@@ -98,8 +89,13 @@ public class BaseRepositoryTest {
     }
   }
 
-  private void assertListSize(int expectedValue) {
+  private void assertListSizeWithRecordedIsTrue(int expectedValue) {
     int size = repository.findByRecordedTrue(Pageable.unpaged()).get().getSize();
+    assertThat(size).isEqualTo(expectedValue);
+  }
+
+  private void assertListSizeWithRecorded(boolean isRecorded, int expectedValue) {
+    int size = repository.findByRecorded(isRecorded, Pageable.unpaged()).get().getSize();
     assertThat(size).isEqualTo(expectedValue);
   }
 

@@ -3,14 +3,23 @@ plugins {
   id 'maven-publish'
 }
 
-sourceCompatibility = 11
-targetCompatibility = 1
+group = 'io.github.edmaputra'
+version = "${edVersion}"
 
-allprojects {
-  repositories {
-    mavenLocal()
-    jcenter()
-    mavenCentral()
+sourceCompatibility = 11
+targetCompatibility = 11
+
+repositories {
+  mavenLocal()
+  jcenter()
+  mavenCentral()
+}
+
+publishing {
+  publications {
+    maven(MavenPublication) {
+      from components.java
+    }
   }
 }
 
@@ -19,10 +28,16 @@ subprojects {
   apply plugin: 'maven-publish'
 
   group = 'io.github.edmaputra.ed'
-  version = '0.0.1-SNAPSHOT'
+  version = "${edVersion}"
 
   sourceCompatibility = 11
   targetCompatibility = 11
+
+  repositories {
+    mavenLocal()
+    jcenter()
+    mavenCentral()
+  }
 
   dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
@@ -34,5 +49,13 @@ subprojects {
 
   test {
     useJUnitPlatform()
+  }
+
+  publishing {
+    publications {
+      maven(MavenPublication) {
+        from components.java
+      }
+    }
   }
 }

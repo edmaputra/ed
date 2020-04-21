@@ -25,7 +25,7 @@ public interface BaseService<T extends BaseIdEntity, ID> {
    *
    * @param pageable pagination param
    * @return Collection of entities
-   * @throws DataEmptyException when data is empty or not found
+   * @throws DataEmptyException     when data is empty or not found
    * @throws CrudOperationException when something bad happen
    */
   Page<T> get(Pageable pageable) throws DataEmptyException, CrudOperationException;
@@ -35,7 +35,7 @@ public interface BaseService<T extends BaseIdEntity, ID> {
    *
    * @param id id of the entity
    * @return an entities
-   * @throws DataNotFoundException when entity with the id not found
+   * @throws DataNotFoundException  when entity with the id not found
    * @throws CrudOperationException when something bad happen
    */
   T getOne(ID id) throws DataNotFoundException, CrudOperationException;
@@ -54,7 +54,7 @@ public interface BaseService<T extends BaseIdEntity, ID> {
    *
    * @param t entity with new value
    * @return entity that have updated
-   * @throws DataNotFoundException when entity not found
+   * @throws DataNotFoundException  when entity not found
    * @throws CrudOperationException when something bad happen
    */
   T update(T t) throws DataNotFoundException, CrudOperationException;
@@ -62,11 +62,11 @@ public interface BaseService<T extends BaseIdEntity, ID> {
   /**
    * Delete an entity
    *
-   * @param id the id of the entity
+   * @param t the entity that want to delete
    * @return entity that have deleted
-   * @throws DataNotFoundException when entity with given id not found
+   * @throws DataNotFoundException  when entity with given id not found
    * @throws CrudOperationException when something bad happen
    */
-  T delete(ID id) throws DataNotFoundException, CrudOperationException;
+  T delete(T t) throws DataNotFoundException, CrudOperationException;
 
 }

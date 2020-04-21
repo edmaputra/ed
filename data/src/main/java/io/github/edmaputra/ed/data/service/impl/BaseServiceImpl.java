@@ -87,11 +87,11 @@ public class BaseServiceImpl<T extends BaseIdEntity, ID> implements BaseService<
    * {@inheritDoc}
    */
   @Override
-  public T delete(ID id) throws DataNotFoundException, CrudOperationException {
-    if (id == null) {
-      throw new CrudOperationException("ID that want to delete is Null");
+  public T delete(T t) throws DataNotFoundException, CrudOperationException {
+    if (t == null) {
+      throw new CrudOperationException("Entity that want to delete is Null");
     }
-    Optional<T> e = repository.findById(id);
+    Optional<T> e = repository.findById(t.getId());
     if (!e.isPresent()) {
       throw new DataNotFoundException("Data Not Found");
     }

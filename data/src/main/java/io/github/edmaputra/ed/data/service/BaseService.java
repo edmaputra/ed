@@ -1,9 +1,9 @@
 package io.github.edmaputra.ed.data.service;
 
+import io.github.edmaputra.ed.core.exception.CrudOperationException;
+import io.github.edmaputra.ed.core.exception.DataEmptyException;
+import io.github.edmaputra.ed.core.exception.DataNotFoundException;
 import io.github.edmaputra.ed.core.model.BaseIdEntity;
-import io.github.edmaputra.ed.data.exception.CrudOperationException;
-import io.github.edmaputra.ed.data.exception.DataEmptyException;
-import io.github.edmaputra.ed.data.exception.DataNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

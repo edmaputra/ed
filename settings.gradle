@@ -6,3 +6,5 @@ include 'data'
 project(':data').projectDir = file('data')
 include 'web'
 project(':web').projectDir = file('web')
+include 'sample'
+project(':sample').projectDir = file('sample')

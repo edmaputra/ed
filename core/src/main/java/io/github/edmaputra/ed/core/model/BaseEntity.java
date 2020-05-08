@@ -8,6 +8,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -20,10 +23,13 @@ import java.time.Instant;
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 
+  @NotBlank(message = "Version should not be blank")
+  @Size(max = DbColumn.VERSION_LENGTH, min = 1, message = "Version length should be 1 - " + DbColumn.VERSION_LENGTH)
   @Column(length = DbColumn.VERSION_LENGTH)
   protected String version;
 
   @CreatedDate
+  @PastOrPresent(message = "Create Time should be past or present")
   protected Instant createTime;
 
   @CreatedBy
@@ -31,6 +37,7 @@ public abstract class BaseEntity implements Serializable {
   protected String creator;
 
   @LastModifiedDate
+  @PastOrPresent(message = "Create Time should be past or present")
   protected Instant updateTime;
 
   @LastModifiedBy

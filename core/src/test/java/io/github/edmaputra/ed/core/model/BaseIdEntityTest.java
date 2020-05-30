@@ -1,10 +1,8 @@
 package io.github.edmaputra.ed.core.model;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,9 +38,7 @@ class BaseIdEntityTest {
   }
 
   @Test
-  @Disabled
   void givenBaseIdEntityImpl_whenIntegrateWithBaseEntity_thenShouldReturnExpectedValue() {
-    Instant time = Instant.ofEpochMilli(1586445970);
     impl = new BaseIdEntityImpl();
 
     assertThat(impl.getId()).isNotNull();
@@ -51,10 +47,8 @@ class BaseIdEntityTest {
     assertThat(impl.getUpdater()).isEqualTo("");
     assertThat(impl.isRecorded()).isEqualTo(true);
 
-    assertThat(impl.getCreateTime()).isEqualTo(time);
-    assertThat(impl.getUpdateTime()).isEqualTo(time);
-
-
+    assertThat(impl.getCreateTime()).isNotNull();
+    assertThat(impl.getUpdateTime()).isNotNull();
   }
 
   private void assertDefaultValue(BaseIdEntity<UUID> entity) {

@@ -1,15 +1,10 @@
 package io.github.edmaputra.ed.core.model;
 
-import io.github.edmaputra.ed.core.annotation.FilterType;
 import io.github.edmaputra.ed.core.annotation.Filterable;
-import io.github.edmaputra.ed.core.constant.Contract;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -81,30 +76,6 @@ class BaseEntityTest {
     assertThat(baseEntity.getUpdateTime()).isEqualTo(time);
   }
 
-  @Test
-  void givenFilterableEntity_whenGetFilterableFields_thenReturnCorrectFields() {
-    Map<String, Object> field1 = new HashMap<>();
-    field1.put(Contract.FILTERABLE_FIELD_MAP_KEY, "field1");
-    field1.put(Contract.FILTERABLE_TYPE_MAP_KEY, FilterType.STRING);
-
-    List<Map> annotatedFields = filterableEntity.getFilterableFields();
-
-    assertThat(annotatedFields.size()).isEqualTo(2);
-    assertThat(annotatedFields).contains(field1);
-    assertThat(annotatedFields.get(0).containsValue(FilterType.STRING)).isTrue();
-    assertThat(annotatedFields.get(0).containsValue("field1")).isTrue();
-    assertThat(annotatedFields.get(1).containsValue(FilterType.NUMBER)).isTrue();
-    assertThat(annotatedFields.get(1).containsValue("field2")).isTrue();
-  }
-
-  @Test
-  void givenObjectWithoutFilterableField_whenGetFilterableFields_thenShouldReturnEmptyList() {
-    List<Map> annotatedFields = baseEntityWithData.getFilterableFields();
-
-    assertThat(annotatedFields.isEmpty()).isTrue();
-    assertThat(annotatedFields.size()).isZero();
-  }
-
   private static class BaseEntityImpl extends BaseEntity {
 
     public BaseEntityImpl() {
@@ -121,7 +92,7 @@ class BaseEntityTest {
     @Filterable
     private String field1;
 
-    @Filterable(type = FilterType.NUMBER)
+    @Filterable
     private int field2;
 
     private double field3;

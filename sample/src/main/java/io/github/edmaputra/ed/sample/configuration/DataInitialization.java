@@ -29,7 +29,8 @@ public class DataInitialization {
         "Kota Bangun",
         LocalDate.of(1990, Month.AUGUST, 1),
         "085112345678",
-        "bangun.edma.saputra@gmail.com"
+        "bangun.edma.saputra@gmail.com",
+        326
     );
 
     e1 = new Employee("Rina",
@@ -39,8 +40,9 @@ public class DataInitialization {
         MaritalStatus.SINGLE,
         "Bandung",
         LocalDate.of(1991, Month.SEPTEMBER, 5),
-        "08520987654",
-        "rina.wibowo@mail.com"
+        "0852098754",
+        "rina.wibowo@mail.com",
+        521
     );
 
     e2 = new Employee("Alex",
@@ -51,7 +53,8 @@ public class DataInitialization {
         "Espanyol",
         LocalDate.of(1988, Month.FEBRUARY, 16),
         "085555550000",
-        "maningger@mail.com"
+        "maningger@mail.com",
+        321
     );
 
     e3 = new Employee("Ahmad",
@@ -61,8 +64,9 @@ public class DataInitialization {
         MaritalStatus.SINGLE,
         "Makassar",
         LocalDate.of(1982, Month.MAY, 21),
-        "088812345678",
-        "ahmad.yusuf@mail.com"
+        "08881234578",
+        "ahmad.yusuf@mail.com",
+        20
     );
 
     e4 = new Employee("Cindy",
@@ -72,8 +76,9 @@ public class DataInitialization {
         MaritalStatus.WIDOWER,
         "Jakarta",
         LocalDate.of(1995, Month.NOVEMBER, 15),
-        "08660987654",
-        "cindy.mistika@mail.com"
+        "08660123654",
+        "cindy.mistika@mail.com",
+        66
     );
 
     e5 = new Employee("Robert",
@@ -84,14 +89,17 @@ public class DataInitialization {
         "Medan",
         LocalDate.of(1972, Month.DECEMBER, 25),
         "085555551111",
-        "robert.pasaribu@mail.com"
+        "robert.pasaribu@mail.com",
+        466
     );
   }
 
-  @PostConstruct
+//  @PostConstruct
   public void save() throws CrudOperationException {
     service.add(e0);
     service.add(e1);
+    service.add(e2);
+    service.add(e3);
   }
 
 }

@@ -30,6 +30,8 @@ public interface BaseService<T extends BaseIdEntity, ID> {
    */
   Page<T> get(Pageable pageable) throws DataEmptyException, CrudOperationException;
 
+  Page<T> get(Pageable pageable, String keyword) throws DataEmptyException, CrudOperationException;
+
   /**
    * Get an entities by its id
    *

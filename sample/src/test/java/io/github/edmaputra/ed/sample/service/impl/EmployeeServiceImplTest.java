@@ -111,7 +111,7 @@ class EmployeeServiceImplTest {
     assertThat(employee.getGender()).isEqualTo(Gender.MALE);
     assertThat(employee.getMaritalStatus()).isEqualTo(MaritalStatus.MARRIED);
     assertThat(employee.getBirthDate()).isEqualTo(LocalDate.of(1990, Month.AUGUST, 1));
-    assertThat(employee.getPhoneNumber()).isEqualTo("085112345678");
+    assertThat(employee.getPhoneNumber()).isEqualTo("08511234578");
     assertThat(employee.getEmail()).isEqualTo("bangun.edma.saputra@gmail.com");
   }
 
@@ -143,7 +143,7 @@ class EmployeeServiceImplTest {
     assertThat(employee.getGender()).isEqualTo(Gender.MALE);
     assertThat(employee.getMaritalStatus()).isEqualTo(MaritalStatus.MARRIED);
     assertThat(employee.getBirthDate()).isEqualTo(LocalDate.of(1990, Month.AUGUST, 1));
-    assertThat(employee.getPhoneNumber()).isEqualTo("085112345678");
+    assertThat(employee.getPhoneNumber()).isEqualTo("08511234578");
     assertThat(employee.getEmail()).isEqualTo("bangun.edma.saputra@gmail.com");
   }
 
@@ -168,7 +168,7 @@ class EmployeeServiceImplTest {
     assertThat(employee.getGender()).isEqualTo(Gender.MALE);
     assertThat(employee.getMaritalStatus()).isEqualTo(MaritalStatus.MARRIED);
     assertThat(employee.getBirthDate()).isEqualTo(LocalDate.of(1990, Month.AUGUST, 1));
-    assertThat(employee.getPhoneNumber()).isEqualTo("085112345678");
+    assertThat(employee.getPhoneNumber()).isEqualTo("08511234578");
     assertThat(employee.getEmail()).isEqualTo("bangun.edma.saputra@gmail.com");
   }
 

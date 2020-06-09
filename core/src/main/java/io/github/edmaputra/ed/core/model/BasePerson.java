@@ -1,5 +1,6 @@
 package io.github.edmaputra.ed.core.model;
 
+import io.github.edmaputra.ed.core.annotation.Filterable;
 import io.github.edmaputra.ed.core.constant.DbColumn;
 import io.github.edmaputra.ed.core.validator.Name;
 
@@ -23,26 +24,32 @@ public abstract class BasePerson<T> extends BaseIdEntity<T> {
 
   @Name
   @Column(length = DbColumn.NAME_LENGTH, nullable = false)
+  @Filterable
   protected String firstName;
 
   @Column(length = DbColumn.NAME_LENGTH)
+  @Filterable
   protected String middleName;
 
   @Name
   @Column(length = DbColumn.NAME_LENGTH, nullable = false)
+  @Filterable
   protected String lastName;
 
   @NotNull(message = "Should not null")
   @Column(length = DbColumn.GENDER_LENGTH, nullable = false)
+  @Filterable
   protected Gender gender;
 
   @NotNull(message = "Should not null")
   @Column(length = DbColumn.MARITAL_STATUS_LENGTH, nullable = false)
+  @Filterable
   protected MaritalStatus maritalStatus;
 
   @NotBlank(message = "Should not Blank")
   @Size(max = DbColumn.CITY_NAME_LENGTH, min = 1, message = "Length should be 1 - " + DbColumn.CITY_NAME_LENGTH)
   @Column(length = DbColumn.CITY_NAME_LENGTH, nullable = false)
+  @Filterable
   protected String birthPlace;
 
   @NotNull
@@ -52,10 +59,12 @@ public abstract class BasePerson<T> extends BaseIdEntity<T> {
   @NotBlank(message = "Should not Blank")
   @Size(max = DbColumn.PHONE_NUMBER_LENGTH, min = 1, message = "Length should be 1 - " + DbColumn.PHONE_NUMBER_LENGTH)
   @Column(length = DbColumn.PHONE_NUMBER_LENGTH, nullable = false)
+  @Filterable
   protected String phoneNumber;
 
   @Email
   @Column(length = DbColumn.EMAIL_LENGTH)
+  @Filterable
   protected String email;
 
   public BasePerson() {

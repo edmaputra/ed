@@ -4,6 +4,7 @@ import io.github.edmaputra.ed.core.exception.CrudOperationException;
 import io.github.edmaputra.ed.core.exception.DataEmptyException;
 import io.github.edmaputra.ed.core.exception.DataNotFoundException;
 import io.github.edmaputra.ed.core.model.BaseIdEntity;
+import io.github.edmaputra.ed.data.predicate.BasePredicate;
 import io.github.edmaputra.ed.data.repository.BaseRepository;
 import io.github.edmaputra.ed.data.service.BaseService;
 import org.springframework.beans.BeanUtils;
@@ -19,9 +20,16 @@ public class BaseServiceImpl<T extends BaseIdEntity, ID> implements BaseService<
 
   private static final String IGNORED_PROPERTIES = "creator, createTime";
   private final BaseRepository repository;
+  private BasePredicate predicate;
 
   public BaseServiceImpl(BaseRepository repository) {
     this.repository = repository;
+//    this.entity =
+  }
+
+  public BaseServiceImpl(BaseRepository repository, BasePredicate predicate) {
+    this.repository = repository;
+    this.predicate = predicate;
   }
 
   /**
@@ -33,6 +41,18 @@ public class BaseServiceImpl<T extends BaseIdEntity, ID> implements BaseService<
       throw new CrudOperationException("Pagination is Null");
     }
     Page<T> tPage = repository.findAll(pageable);
+    if (tPage.isEmpty()) {
+      throw new DataEmptyException("Data Empty");
+    }
+    return tPage;
+  }
+
+  @Override
+  public Page<T> get(Pageable pageable, String keyword) throws DataEmptyException, CrudOperationException {
+    if (pageable == null) {
+      throw new CrudOperationException("Pagination is Null");
+    }
+    Page<T> tPage = repository.findAll(predicate.getPredicate(keyword), pageable);
     if (tPage.isEmpty()) {
       throw new DataEmptyException("Data Empty");
     }

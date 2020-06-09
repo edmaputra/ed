@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 @Size(max = DbColumn.NAME_LENGTH, min = 2, message = "Length should be 2 - " + DbColumn.NAME_LENGTH)
 public @interface Name {
 
-  String message() default "{name.invalid}";
+  String message() default "";
 
   Class<?>[] groups() default { };
 

@@ -3,6 +3,7 @@ package io.github.edmaputra.ed.core.model;
 import io.github.edmaputra.ed.core.annotation.Filterable;
 import io.github.edmaputra.ed.core.constant.Contract;
 import io.github.edmaputra.ed.core.constant.DbColumn;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -112,19 +113,5 @@ public abstract class BaseEntity implements Serializable {
 
   public void setRecorded(boolean recorded) {
     this.recorded = recorded;
-  }
-
-  public List<Map> getFilterableFields() {
-    List<Map> list = new ArrayList();
-    for (Field field : this.getClass().getDeclaredFields()) {
-      if (field.isAnnotationPresent(Filterable.class)) {
-        Filterable filterable = field.getAnnotation(Filterable.class);
-        Map<String, Object> map = new HashMap<>();
-        map.put(Contract.FILTERABLE_FIELD_MAP_KEY, field.getName());
-        map.put(Contract.FILTERABLE_TYPE_MAP_KEY, filterable.type());
-        list.add(map);
-      }
-    }
-    return list;
   }
 }

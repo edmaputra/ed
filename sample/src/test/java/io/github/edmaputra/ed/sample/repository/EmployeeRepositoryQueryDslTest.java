@@ -7,22 +7,23 @@ import io.github.edmaputra.ed.sample.predicate.EmployeePredicate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTestContextBootstrapper;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.BootstrapWith;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@BootstrapWith(SpringBootTestContextBootstrapper.class)
-@ExtendWith(SpringExtension.class)
+@DataJpaTest
 public class EmployeeRepositoryQueryDslTest {
 
   @Autowired
+  TestEntityManager testEntityManager;
+
+  @Autowired
   EmployeeRepository employeeRepository;
+
   BasePredicate employeePredicate;
 
   DataInit data;
@@ -31,12 +32,12 @@ public class EmployeeRepositoryQueryDslTest {
   void init() {
     data = new DataInit();
     employeePredicate = new EmployeePredicate();
-    employeeRepository.save(data.getEmployee(0));
-    employeeRepository.save(data.getEmployee(1));
-    employeeRepository.save(data.getEmployee(2));
-    employeeRepository.save(data.getEmployee(3));
-    employeeRepository.save(data.getEmployee(4));
-    employeeRepository.save(data.getEmployee(5));
+    testEntityManager.persist(data.getEmployee(0));
+    testEntityManager.persist(data.getEmployee(1));
+    testEntityManager.persist(data.getEmployee(2));
+    testEntityManager.persist(data.getEmployee(3));
+    testEntityManager.persist(data.getEmployee(4));
+    testEntityManager.persist(data.getEmployee(5));
   }
 
   @Test
@@ -107,7 +108,12 @@ public class EmployeeRepositoryQueryDslTest {
 
   @AfterEach
   void clear() {
-    employeeRepository.deleteAll();
+    testEntityManager.remove(data.getEmployee(0));
+    testEntityManager.remove(data.getEmployee(1));
+    testEntityManager.remove(data.getEmployee(2));
+    testEntityManager.remove(data.getEmployee(3));
+    testEntityManager.remove(data.getEmployee(4));
+    testEntityManager.remove(data.getEmployee(5));
     assertThat(employeeRepository.findAll().size()).isZero();
   }
 }

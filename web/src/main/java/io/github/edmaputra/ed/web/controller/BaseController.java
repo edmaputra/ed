@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -43,9 +44,15 @@ public class BaseController<T extends BaseIdEntity, ID> {
    * @throws CrudOperationException when crud operation error
    * @throws DataEmptyException     when data is empty
    */
+//  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+//  public ResponseEntity get(Pageable pageable) throws CrudOperationException, DataEmptyException {
+//    return ResponseEntity.ok().body(service.get(pageable));
+//  }
+
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity get(Pageable pageable) throws CrudOperationException, DataEmptyException {
-    return ResponseEntity.ok().body(service.get(pageable));
+  public ResponseEntity getWithKeyword(@RequestParam(required = false, defaultValue = "", name = "filter") String filter,
+                                       Pageable pageable) throws CrudOperationException, DataEmptyException {
+    return ResponseEntity.ok().body(service.get(pageable, filter));
   }
 
   /**

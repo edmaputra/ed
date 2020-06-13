@@ -41,7 +41,6 @@ public abstract class BaseControllerExceptionHandler {
     List<String> errors = new ArrayList<>();
     for (ConstraintViolation violation : ex.getConstraintViolations()) {
       errors.add(violation.getPropertyPath().toString() + "; " + violation.getMessage());
-      //      errors.add(new Violation(violation.getPropertyPath().toString(), violation.getMessage()));
     }
     ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, message, errors);
     return new ResponseEntity<>(apiError, apiError.getStatus());
@@ -53,7 +52,6 @@ public abstract class BaseControllerExceptionHandler {
     List<String> errors = new ArrayList<>();
     for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
       errors.add(fieldError.getField() + " " + fieldError.getDefaultMessage());
-//      errors.add(new Violation(fieldError.getField(), fieldError.getDefaultMessage()));
     }
     ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, message, errors);
     return new ResponseEntity<>(apiError, apiError.getStatus());

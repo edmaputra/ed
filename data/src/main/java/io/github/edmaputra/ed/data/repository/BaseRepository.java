@@ -1,13 +1,11 @@
 package io.github.edmaputra.ed.data.repository;
 
-import com.querydsl.core.types.Predicate;
 import io.github.edmaputra.ed.core.model.BaseEntity;
 import io.github.edmaputra.ed.core.model.BaseIdEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
-import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.Optional;
@@ -22,7 +20,7 @@ import java.util.Optional;
  * @since 0.0.1
  */
 @NoRepositoryBean
-public interface BaseRepository<T extends BaseIdEntity<ID>, ID> extends
+public interface BaseRepository<T extends BaseIdEntity, ID> extends
     JpaRepository<T, ID>,
     QuerydslPredicateExecutor<T> {
 
@@ -44,6 +42,5 @@ public interface BaseRepository<T extends BaseIdEntity<ID>, ID> extends
    * @return a page of entities
    */
   Optional<Page<T>> findByRecorded(boolean recorded, Pageable pageable);
-  Optional<Page<T>> findByRecorded(boolean recorded, Predicate predicate, Pageable pageable);
 
 }

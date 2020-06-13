@@ -7,6 +7,7 @@ import io.github.edmaputra.ed.core.model.Gender;
 import io.github.edmaputra.ed.core.model.MaritalStatus;
 import io.github.edmaputra.ed.sample.DataInit;
 import io.github.edmaputra.ed.sample.model.Employee;
+import io.github.edmaputra.ed.sample.predicate.EmployeePredicate;
 import io.github.edmaputra.ed.sample.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,9 @@ class EmployeeServiceImplTest {
 
   @Mock
   private EmployeeRepository repository;
+
+  @Mock
+  EmployeePredicate predicate;
 
   @InjectMocks
   private EmployeeServiceImpl service;

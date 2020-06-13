@@ -27,6 +27,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
@@ -71,18 +72,18 @@ class EmployeeControllerTest {
         .andExpect(status().isOk())
         .andReturn();
 
-    verify(employeeService, times(1)).get(any(Pageable.class));
+    verify(employeeService, times(1)).get(any(Pageable.class), anyString());
   }
 
   @Test
   void givenNullPageable_whenGet_thenThrowCrudOperationExceptionK() throws Exception {
     CrudOperationException e = new CrudOperationException("Pageable is Null");
-    doThrow(e).when(employeeService).get(any(Pageable.class));
+    doThrow(e).when(employeeService).get(any(Pageable.class), anyString());
 
     MvcResult mvcResult = mockMvc.perform(get("/employees"))
         .andExpect(status().isBadRequest()).andReturn();
 
-    verify(employeeService, times(1)).get(any(Pageable.class));
+    verify(employeeService, times(1)).get(any(Pageable.class), anyString());
     String expectedResponse = objectMapper.writeValueAsString(ResponseUtil.createExceptionResponse(e, HttpStatus.BAD_REQUEST).getBody());
     assertThat(mvcResult.getResponse().getContentAsString()).isEqualTo(expectedResponse);
   }
@@ -90,12 +91,13 @@ class EmployeeControllerTest {
   @Test
   void givenAnyPageable_whenGet_thenThrowDataEmptyExceptionK() throws Exception {
     DataEmptyException e = new DataEmptyException("Data is Empty");
-    doThrow(e).when(employeeService).get(any(Pageable.class));
+    doThrow(e).when(employeeService).get(any(Pageable.class), anyString());
 
     MvcResult mvcResult = mockMvc.perform(get("/employees"))
         .andExpect(status().isNotFound()).andReturn();
 
-    verify(employeeService, times(1)).get(any(Pageable.class));
+
+    verify(employeeService, times(1)).get(any(Pageable.class), anyString());
     String expectedResponse = objectMapper.writeValueAsString(ResponseUtil.createExceptionResponse(e, HttpStatus.NOT_FOUND).getBody());
     assertThat(mvcResult.getResponse().getContentAsString()).isEqualTo(expectedResponse);
   }

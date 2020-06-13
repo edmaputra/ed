@@ -20,12 +20,7 @@ public class BaseServiceImpl<T extends BaseIdEntity, ID> implements BaseService<
 
   private static final String IGNORED_PROPERTIES = "creator, createTime";
   private final BaseRepository repository;
-  private BasePredicate predicate;
-
-  public BaseServiceImpl(BaseRepository repository) {
-    this.repository = repository;
-//    this.entity =
-  }
+  private final BasePredicate predicate;
 
   public BaseServiceImpl(BaseRepository repository, BasePredicate predicate) {
     this.repository = repository;

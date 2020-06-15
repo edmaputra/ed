@@ -16,14 +16,6 @@ repositories {
   mavenCentral()
 }
 
-publishing {
-  publications {
-    maven(MavenPublication) {
-      from components.java
-    }
-  }
-}
-
 subprojects {
   apply plugin: 'java'
   apply plugin: 'maven-publish'
@@ -54,6 +46,11 @@ subprojects {
 
   test {
     useJUnitPlatform()
+  }
+
+  java {
+    withSourcesJar()
+    withJavadocJar()
   }
 
   publishing {

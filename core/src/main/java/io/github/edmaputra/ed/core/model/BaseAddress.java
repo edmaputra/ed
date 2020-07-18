@@ -6,16 +6,17 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * The abstract of Address object
  *
- * @param <T> type of Id
+ * @param <ID> type of Id
  * @author edmaputra
  * @since 0.0.1
  */
 @MappedSuperclass
-public abstract class BaseAddress<T> extends BaseIdEntity<T> {
+public abstract class BaseAddress<ID extends Serializable> extends BaseIdEntity<ID> {
 
   @NotBlank(message = "Should not Blank")
   @Size(max = DbColumn.NAME_LENGTH, min = 1, message = "Length should be 1 - " + DbColumn.NAME_LENGTH)

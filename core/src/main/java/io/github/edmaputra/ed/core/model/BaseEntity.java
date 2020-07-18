@@ -1,9 +1,6 @@
 package io.github.edmaputra.ed.core.model;
 
-import io.github.edmaputra.ed.core.annotation.Filterable;
-import io.github.edmaputra.ed.core.constant.Contract;
 import io.github.edmaputra.ed.core.constant.DbColumn;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -15,12 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Base Entity class in abstract form
@@ -52,19 +44,19 @@ public abstract class BaseEntity implements Serializable {
   @Column(length = DbColumn.NAME_LENGTH)
   protected String updater;
 
-  protected boolean recorded;
+  protected boolean deleteFlag;
 
   public BaseEntity() {
-    this("1", Instant.now(), "", Instant.now(), "", true);
+    this("1", Instant.now(), "", Instant.now(), "", false);
   }
 
-  public BaseEntity(String version, Instant createTime, String creator, Instant updateTime, String updater, boolean recorded) {
+  public BaseEntity(String version, Instant createTime, String creator, Instant updateTime, String updater, boolean deleteFlag) {
     this.version = version;
     this.createTime = createTime;
     this.creator = creator;
     this.updateTime = updateTime;
     this.updater = updater;
-    this.recorded = recorded;
+    this.deleteFlag = deleteFlag;
   }
 
   public String getVersion() {
@@ -107,11 +99,11 @@ public abstract class BaseEntity implements Serializable {
     this.updater = updater;
   }
 
-  public boolean isRecorded() {
-    return recorded;
+  public boolean isDeleteFlag() {
+    return deleteFlag;
   }
 
-  public void setRecorded(boolean recorded) {
-    this.recorded = recorded;
+  public void setDeleteFlag(boolean deleteFlag) {
+    this.deleteFlag = deleteFlag;
   }
 }

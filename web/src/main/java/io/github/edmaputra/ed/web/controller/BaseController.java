@@ -5,6 +5,7 @@ import io.github.edmaputra.ed.core.exception.DataEmptyException;
 import io.github.edmaputra.ed.core.exception.DataNotFoundException;
 import io.github.edmaputra.ed.core.model.BaseIdEntity;
 import io.github.edmaputra.ed.data.service.BaseService;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.io.Serializable;
 
 
 /**
@@ -28,7 +30,7 @@ import javax.validation.Valid;
  * @author edmaputra
  * @since 0.0.1
  */
-public class BaseController<T extends BaseIdEntity, ID> {
+public class BaseController<T extends BaseIdEntity<ID>, ID extends Serializable> {
 
   private final BaseService<T, ID> service;
 
@@ -36,22 +38,9 @@ public class BaseController<T extends BaseIdEntity, ID> {
     this.service = service;
   }
 
-  /**
-   * Get all entity with pagination
-   *
-   * @param pageable pagination
-   * @return Response Entity with result body
-   * @throws CrudOperationException when crud operation error
-   * @throws DataEmptyException     when data is empty
-   */
-//  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-//  public ResponseEntity get(Pageable pageable) throws CrudOperationException, DataEmptyException {
-//    return ResponseEntity.ok().body(service.get(pageable));
-//  }
-
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity getWithKeyword(@RequestParam(required = false, defaultValue = "", name = "filter") String filter,
-                                       Pageable pageable) throws CrudOperationException, DataEmptyException {
+  public ResponseEntity<Page<T>> getWithKeyword(@RequestParam(required = false, defaultValue = "", name = "filter") String filter,
+                                                Pageable pageable) throws CrudOperationException, DataEmptyException {
     return ResponseEntity.ok().body(service.get(pageable, filter));
   }
 
@@ -64,7 +53,7 @@ public class BaseController<T extends BaseIdEntity, ID> {
    * @throws DataNotFoundException  when data is not found
    */
   @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity find(@PathVariable ID id) throws CrudOperationException, DataNotFoundException {
+  public ResponseEntity<T> find(@PathVariable ID id) throws CrudOperationException, DataNotFoundException {
     T t = service.getOne(id);
     return ResponseEntity.ok().body(t);
   }
@@ -77,7 +66,7 @@ public class BaseController<T extends BaseIdEntity, ID> {
    * @throws CrudOperationException when something bad happen
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity add(@Valid @RequestBody T t) throws CrudOperationException {
+  public ResponseEntity<T> add(@Valid @RequestBody T t) throws CrudOperationException {
     T result = service.add(t);
     return new ResponseEntity<>(result, HttpStatus.CREATED);
   }
@@ -91,13 +80,11 @@ public class BaseController<T extends BaseIdEntity, ID> {
    * @throws DataNotFoundException  when entity want to update is not found
    */
   @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<T> update(@Valid @RequestBody T t)
-      throws CrudOperationException, DataNotFoundException {
+  public ResponseEntity<T> update(@Valid @RequestBody T t) throws CrudOperationException, DataNotFoundException {
 
     T result = service.update(t);
     return ResponseEntity.ok().body(result);
   }
-
 
   /**
    * Delete an entity
@@ -108,7 +95,7 @@ public class BaseController<T extends BaseIdEntity, ID> {
    * @throws CrudOperationException when entity have bad values
    */
   @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity delete(@Valid @RequestBody T t) throws CrudOperationException, DataNotFoundException {
+  public ResponseEntity<T> delete(@Valid @RequestBody T t) throws CrudOperationException, DataNotFoundException {
     T result = service.delete(t);
     return ResponseEntity.ok().body(result);
   }

@@ -15,7 +15,7 @@ class BaseEntityTest {
   private static final String DEFAULT_VERSION = "1";
   private static final String DEFAULT_CREATOR = "";
   private static final String DEFAULT_UPDATER = "";
-  private static final boolean DEFAULT_RECORDED = true;
+  private static final boolean DEFAULT_DELETE_FLAG = false;
 
   private static final Instant CREATION_TIME = Instant.ofEpochMilli(1586275079);
   private static final Instant UPDATE_TIME = Instant.ofEpochMilli(1586275079);
@@ -40,7 +40,7 @@ class BaseEntityTest {
     assertThat(baseEntity.getVersion()).isEqualTo(DEFAULT_VERSION);
     assertThat(baseEntity.getCreator()).isEqualTo(DEFAULT_CREATOR);
     assertThat(baseEntity.getUpdater()).isEqualTo(DEFAULT_UPDATER);
-    assertThat(baseEntity.isRecorded()).isEqualTo(DEFAULT_RECORDED);
+    assertThat(baseEntity.isDeleteFlag()).isEqualTo(DEFAULT_DELETE_FLAG);
 
     assertThat(baseEntity.getCreateTime()).isNotNull();
     assertThat(baseEntity.getUpdateTime()).isNotNull();
@@ -51,7 +51,7 @@ class BaseEntityTest {
     assertThat(baseEntityWithData.getVersion()).isEqualTo("1.1");
     assertThat(baseEntityWithData.getCreator()).isEqualTo("administrator");
     assertThat(baseEntityWithData.getUpdater()).isEqualTo("administrator");
-    assertThat(baseEntityWithData.isRecorded()).isEqualTo(true);
+    assertThat(baseEntityWithData.isDeleteFlag()).isEqualTo(true);
 
     assertThat(baseEntityWithData.getCreateTime()).isEqualTo(CREATION_TIME);
     assertThat(baseEntityWithData.getUpdateTime()).isEqualTo(UPDATE_TIME);
@@ -65,12 +65,12 @@ class BaseEntityTest {
     baseEntity.setUpdateTime(time);
     baseEntity.setCreator("USER");
     baseEntity.setUpdater("USER");
-    baseEntity.setRecorded(false);
+    baseEntity.setDeleteFlag(false);
 
     assertThat(baseEntity.getVersion()).isEqualTo("2");
     assertThat(baseEntity.getCreator()).isEqualTo("USER");
     assertThat(baseEntity.getUpdater()).isEqualTo("USER");
-    assertThat(baseEntity.isRecorded()).isEqualTo(false);
+    assertThat(baseEntity.isDeleteFlag()).isEqualTo(false);
 
     assertThat(baseEntity.getCreateTime()).isEqualTo(time);
     assertThat(baseEntity.getUpdateTime()).isEqualTo(time);

@@ -31,16 +31,16 @@ public interface BaseRepository<T extends BaseIdEntity, ID> extends
    * @param pageable pageable values
    * @return a page of entities
    */
-  Optional<Page<T>> findByRecordedTrue(Pageable pageable);
+  Optional<Page<T>> findByDeleteFlagFalse(Pageable pageable);
 
   /**
    * Returns a {@link Optional} of entities with paging restriction provided in the {@code Pageable} object
-   * and recorded parameter in boolean type
+   * and deleteFlag parameter in boolean type
    *
-   * @param recorded is recorded or not
+   * @param deleteFlag is deleted or not
    * @param pageable pageable entity
    * @return a page of entities
    */
-  Optional<Page<T>> findByRecorded(boolean recorded, Pageable pageable);
+  Optional<Page<T>> findByDeleteFlag(boolean deleteFlag, Pageable pageable);
 
 }

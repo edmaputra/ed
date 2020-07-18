@@ -9,10 +9,9 @@ spring:
         format_sql: true
   datasource:
     driver-class-name: "org.h2.Driver"
-    platform: "postgres"
     username: "sa"
     password: "sa"
-    url: "jdbc:h2:file:~/ed-sample"
+    url: "jdbc:h2:mem:ed-sample"
   h2:
     console:
       enabled: true

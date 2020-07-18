@@ -2,46 +2,41 @@ plugins {
   id 'java'
   id 'maven-publish'
   id "net.ltgt.apt" version "0.21"
-}
-
-group = 'io.github.edmaputra'
-version = "${edVersion}"
-
-sourceCompatibility = 11
-targetCompatibility = 11
-
-repositories {
-  mavenLocal()
-  jcenter()
-  mavenCentral()
+  id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
 }
 
 subprojects {
+  group = 'io.github.edmaputra.ed'
+  version = "${edVersion}"
+
   apply plugin: 'java'
+  apply plugin: 'java-library'
   apply plugin: 'maven-publish'
   apply plugin: 'net.ltgt.apt'
   apply plugin: 'net.ltgt.apt-idea'
-
-  group = 'io.github.edmaputra.ed'
-  version = "${edVersion}"
+  apply plugin: 'io.spring.dependency-management'
 
   sourceCompatibility = 11
   targetCompatibility = 11
 
   repositories {
     mavenLocal()
-    jcenter()
     mavenCentral()
+    jcenter()
+  }
+
+  dependencyManagement {
+    imports {
+      mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+    }
   }
 
   dependencies {
     implementation 'org.apache.commons:commons-lang3:3.10'
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-    testImplementation "org.mockito:mockito-core:${mockitoVersion}"
-    testImplementation "org.assertj:assertj-core:${assertjVersion}"
-
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+      exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
   }
 
   test {
@@ -51,13 +46,5 @@ subprojects {
   java {
     withSourcesJar()
     withJavadocJar()
-  }
-
-  publishing {
-    publications {
-      maven(MavenPublication) {
-        from components.java
-      }
-    }
   }
 }

@@ -78,7 +78,7 @@ public class EmployeeIntegrationTest {
 
   @Test
   @Order(1002)
-  public void testGetOneEmployeeWithNonNumber_shouldBadRequest() throws JSONException {
+  public void testGetOneEmployeeWithNonNumber_shouldBadRequest() {
     String expected = "{statusCode:404, status:\"NOT_FOUND\", message:\"Data Not Found\"}";
 
     ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + port + "/employees/null", String.class);
@@ -155,7 +155,7 @@ public class EmployeeIntegrationTest {
 
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
-    HttpEntity<Employee> entity = new HttpEntity<Employee>(savedEmployee, headers);
+    HttpEntity<Employee> entity = new HttpEntity<>(savedEmployee, headers);
 
     ResponseEntity<String> updateResponse =
         restTemplate.exchange("http://localhost:" + port + "/employees/", HttpMethod.PUT, entity, String.class);
@@ -192,7 +192,7 @@ public class EmployeeIntegrationTest {
 
     assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(deletedEmployee.getId()).isEqualTo(employeeId);
-    assertThat(deletedEmployee.isRecorded()).isFalse();
+    assertThat(deletedEmployee.isDeleteFlag()).isTrue();
   }
 
   private void assertEmployeeAttribute(

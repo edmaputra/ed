@@ -8,6 +8,10 @@ package io.github.edmaputra.ed.core.exception;
  */
 public class DataEmptyException extends Exception {
 
+  public DataEmptyException() {
+    super("Data is empty");
+  }
+
   public DataEmptyException(String message) {
     super(message);
   }

@@ -91,16 +91,12 @@ class EmployeeServiceImplTest {
     Page<Employee> pageEmpty = new PageImpl<>(new ArrayList<>());
     doReturn(pageEmpty).when(repository).findAll(any(Pageable.class));
 
-    assertThrows(DataEmptyException.class, () -> {
-      Page<Employee> pages = service.get(Pageable.unpaged());
-    });
+    assertThrows(DataEmptyException.class, () -> service.get(Pageable.unpaged()));
   }
 
   @Test
   void givenNullPageable_whenGet_thenThrowException() {
-    assertThrows(CrudOperationException.class, () -> {
-      Page<Employee> pages = service.get(null);
-    });
+    assertThrows(CrudOperationException.class, () -> service.get(null));
   }
 
   @Test
@@ -121,18 +117,14 @@ class EmployeeServiceImplTest {
 
   @Test
   void givenNullId_whenGetOne_thenThrowException() {
-    assertThrows(CrudOperationException.class, () -> {
-      Employee employees = service.getOne(null);
-    });
+    assertThrows(CrudOperationException.class, () -> service.getOne(null));
   }
 
   @Test
   void givenId_whenGetOne_thenThrowException() {
     doReturn(Optional.empty()).when(repository).findById(anyLong());
 
-    assertThrows(DataNotFoundException.class, () -> {
-      Employee employees = service.getOne(1L);
-    });
+    assertThrows(DataNotFoundException.class, () -> service.getOne(1L));
   }
 
   @Test
@@ -153,9 +145,7 @@ class EmployeeServiceImplTest {
 
   @Test
   void givenNullEmployee_whenAdd_thenThrowException() {
-    assertThrows(CrudOperationException.class, () -> {
-      Employee employees = service.add(null);
-    });
+    assertThrows(CrudOperationException.class, () -> service.add(null));
   }
 
   @Test
@@ -178,18 +168,14 @@ class EmployeeServiceImplTest {
 
   @Test
   void givenNullEmployee_whenUpdate_thenReturnExpectedObject() {
-    assertThrows(CrudOperationException.class, () -> {
-      Employee employees = service.update(null);
-    });
+    assertThrows(CrudOperationException.class, () -> service.update(null));
   }
 
   @Test
   void givenId_whenUpdate_thenThrowException() {
     e0.setId(2L);
     doReturn(Optional.empty()).when(repository).findById(anyLong());
-    assertThrows(DataNotFoundException.class, () -> {
-      Employee employees = service.update(e0);
-    });
+    assertThrows(DataNotFoundException.class, () -> service.update(e0));
   }
 
   @Test
@@ -201,23 +187,29 @@ class EmployeeServiceImplTest {
     Employee employee = service.delete(e0);
 
     assertThat(employee.getFirstName()).isEqualTo("Bangun");
-    assertThat(employee.isRecorded()).isFalse();
+    assertThat(employee.isDeleteFlag()).isTrue();
+  }
+
+  @Test
+  void givenId_whenHardDelete_thenReturnDeletedObject() throws CrudOperationException, DataNotFoundException {
+    e0.setId(1L);
+    doReturn(Optional.of(e0)).when(repository).findById(anyLong());
+
+    Employee employee = service.hardDelete(e0);
+
+    assertThat(employee.getFirstName()).isEqualTo("Bangun");
   }
 
   @Test
   void givenNullId_whenDelete_thenThrowException() {
-    assertThrows(CrudOperationException.class, () -> {
-      Employee employees = service.delete(null);
-    });
+    assertThrows(CrudOperationException.class, () -> service.delete(null));
   }
 
   @Test
   void givenId_whenDelete_thenThrowException() {
     e0.setId(2L);
     doReturn(Optional.empty()).when(repository).findById(anyLong());
-    assertThrows(DataNotFoundException.class, () -> {
-      Employee employees = service.delete(e0);
-    });
+    assertThrows(DataNotFoundException.class, () -> service.delete(e0));
   }
 
 }

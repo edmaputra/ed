@@ -62,7 +62,7 @@ public interface BaseService<T extends BaseIdEntity, ID> {
   T update(T t) throws DataNotFoundException, CrudOperationException;
 
   /**
-   * Delete an entity
+   * Set the entity's delete flag to true
    *
    * @param t the entity that want to delete
    * @return entity that have deleted
@@ -70,5 +70,15 @@ public interface BaseService<T extends BaseIdEntity, ID> {
    * @throws CrudOperationException when something bad happen
    */
   T delete(T t) throws DataNotFoundException, CrudOperationException;
+
+  /**
+   * Delete the entity completely
+   *
+   * @param t the entity that want to delete
+   * @return entity that have deleted
+   * @throws DataNotFoundException  when entity with given id not found
+   * @throws CrudOperationException when something bad happen
+   */
+  T hardDelete(T t) throws DataNotFoundException, CrudOperationException;
 
 }

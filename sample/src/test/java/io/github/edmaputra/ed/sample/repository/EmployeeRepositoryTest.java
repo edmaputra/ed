@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +22,7 @@ class EmployeeRepositoryTest {
   @Autowired
   private EmployeeRepository repository;
 
-  private Employee e1, e2, e3, e4;
+  private Employee e1, e2, e3;
 
   @BeforeEach
   public void init() {
@@ -29,7 +30,6 @@ class EmployeeRepositoryTest {
     e1 = init.getEmployee(0);
     e2 = init.getEmployee(1);
     e3 = init.getEmployee(2);
-    e4 = init.getEmployee(3);
 
     testEntityManager.persist(e1);
     testEntityManager.persist(e2);
@@ -38,54 +38,43 @@ class EmployeeRepositoryTest {
 
   @Test
   void givenEmployeeList_whenFindByRecordedTrue_thenShouldReturnCorrectSize() {
-    assertListSizeWithRecordedIsTrue(3);
+    assertListSizeWithDeleteFlagIsFalse(3);
 
-    setRecorded(false, e1);
-    assertListSizeWithRecordedIsTrue(2);
+    setDeleteFlag(true, e1);
+    assertListSizeWithDeleteFlagIsFalse(2);
 
-    setRecorded(false, e2);
-    assertListSizeWithRecordedIsTrue(1);
+    setDeleteFlag(true, e2);
+    assertListSizeWithDeleteFlagIsFalse(1);
 
-    setRecorded(false, e3);
-    assertListSizeWithRecordedIsTrue(0);
+    setDeleteFlag(true, e3);
+    assertListSizeWithDeleteFlagIsFalse(0);
 
-    setRecorded(true, e1, e2, e3);
-    assertListSizeWithRecordedIsTrue(3);
+    setDeleteFlag(true, e1, e2, e3);
+    assertListSizeWithDeleteFlagIsFalse(0);
   }
 
   @Test
   void givenEmployeeList_whenFindByRecorded_thenShouldReturnCorrectSize() {
-    assertListSizeWithRecorded(true, 3);
-    assertListSizeWithRecorded(false, 0);
+    assertListSizeWithDeleteFlag(true, 0);
+    assertListSizeWithDeleteFlag(false, 3);
 
-    setRecorded(false, e1);
-    assertListSizeWithRecorded(true, 2);
-    assertListSizeWithRecorded(false, 1);
+    setDeleteFlag(true, e1);
+    assertListSizeWithDeleteFlag(true, 1);
+    assertListSizeWithDeleteFlag(false, 2);
 
-    setRecorded(false, e2);
-    assertListSizeWithRecorded(true, 1);
-    assertListSizeWithRecorded(false, 2);
+    setDeleteFlag(true, e2);
+    assertListSizeWithDeleteFlag(true, 2);
+    assertListSizeWithDeleteFlag(false, 1);
 
-    setRecorded(false, e3);
-    assertListSizeWithRecorded(true, 0);
-    assertListSizeWithRecorded(false, 3);
+    setDeleteFlag(true, e3);
+    assertListSizeWithDeleteFlag(true, 3);
+    assertListSizeWithDeleteFlag(false, 0);
 
-    setRecorded(true, e1, e2, e3);
-    assertListSizeWithRecorded(true, 3);
-    assertListSizeWithRecorded(false, 0);
+    setDeleteFlag(true, e1, e2, e3);
+    assertListSizeWithDeleteFlag(true, 3);
+    assertListSizeWithDeleteFlag(false, 0);
 
   }
-
-//  @Test
-//  void testPersistenceConstraint() {
-//    e4.setUpdater("1");
-//    Exception exception = assertThrows(ConstraintViolationException.class, () -> {
-//      repository.save(e4);
-//      testEntityManager.flush();
-//    });
-//
-//    assertThat(exception).isInstanceOf(ConstraintViolationException.class);
-//  }
 
   @AfterEach
   void clear() {
@@ -95,21 +84,21 @@ class EmployeeRepositoryTest {
     testEntityManager.flush();
   }
 
-  private void setRecorded(boolean record, Employee... e) {
+  private void setDeleteFlag(boolean record, Employee... e) {
     for (Employee employee : e) {
-      employee.setRecorded(record);
+      employee.setDeleteFlag(record);
       testEntityManager.merge(employee);
     }
   }
 
-  private void assertListSizeWithRecordedIsTrue(int expectedValue) {
-    int size = repository.findByRecordedTrue(Pageable.unpaged()).get().getSize();
-    assertThat(size).isEqualTo(expectedValue);
+  private void assertListSizeWithDeleteFlagIsFalse(int expectedValue) {
+    Page<Employee> employees = repository.findByDeleteFlagFalse(Pageable.unpaged()).orElse(Page.empty());
+    assertThat(expectedValue).isEqualTo(employees.getTotalElements());
   }
 
-  private void assertListSizeWithRecorded(boolean isRecorded, int expectedValue) {
-    int size = repository.findByRecorded(isRecorded, Pageable.unpaged()).get().getSize();
-    assertThat(size).isEqualTo(expectedValue);
+  private void assertListSizeWithDeleteFlag(boolean isRecorded, int expectedValue) {
+    Page<Employee> employees = repository.findByDeleteFlag(isRecorded, Pageable.unpaged()).orElse(Page.empty());
+    assertThat(expectedValue).isEqualTo(employees.getTotalElements());
   }
 
 }

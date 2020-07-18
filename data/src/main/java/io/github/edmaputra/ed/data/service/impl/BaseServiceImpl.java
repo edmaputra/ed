@@ -11,18 +11,21 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 /**
  * {@inheritDoc}
  */
-public class BaseServiceImpl<T extends BaseIdEntity, ID> implements BaseService<T, ID> {
+public class BaseServiceImpl<T extends BaseIdEntity<ID>, ID extends Serializable>
+    implements BaseService<T, ID> {
 
+  private static final String ENTITY_NULL_MESSAGES = "Entity that want to delete is Null";
   private static final String IGNORED_PROPERTIES = "creator, createTime";
-  private final BaseRepository repository;
-  private final BasePredicate predicate;
+  private final BaseRepository<T, ID> repository;
+  private final BasePredicate<T> predicate;
 
-  public BaseServiceImpl(BaseRepository repository, BasePredicate predicate) {
+  public BaseServiceImpl(BaseRepository<T, ID> repository, BasePredicate<T> predicate) {
     this.repository = repository;
     this.predicate = predicate;
   }
@@ -62,11 +65,7 @@ public class BaseServiceImpl<T extends BaseIdEntity, ID> implements BaseService<
     if (id == null) {
       throw new CrudOperationException("ID is Null");
     }
-    Optional<T> e = repository.findById(id);
-    if (e.isEmpty()) {
-      throw new DataNotFoundException("Data Not Found");
-    }
-    return e.get();
+    return repository.findById(id).orElseThrow(DataNotFoundException::new);
   }
 
   /**
@@ -74,9 +73,7 @@ public class BaseServiceImpl<T extends BaseIdEntity, ID> implements BaseService<
    */
   @Override
   public T add(T t) throws CrudOperationException {
-    if (t == null) {
-      throw new CrudOperationException("Entity that want to create is Null");
-    }
+    validate(t);
     return (T) repository.save(t);
   }
 
@@ -85,14 +82,8 @@ public class BaseServiceImpl<T extends BaseIdEntity, ID> implements BaseService<
    */
   @Override
   public T update(T t) throws DataNotFoundException, CrudOperationException {
-    if (t == null) {
-      throw new CrudOperationException("Entity that want to update is Null");
-    }
-    Optional<T> e = repository.findById(t.getId());
-    if (!e.isPresent()) {
-      throw new DataNotFoundException("Data Not Found");
-    }
-    T entity = e.get();
+    validate(t);
+    T entity = getOne(t.getId());
     BeanUtils.copyProperties(t, entity, IGNORED_PROPERTIES);
     repository.save(entity);
     return entity;
@@ -103,16 +94,24 @@ public class BaseServiceImpl<T extends BaseIdEntity, ID> implements BaseService<
    */
   @Override
   public T delete(T t) throws DataNotFoundException, CrudOperationException {
-    if (t == null) {
-      throw new CrudOperationException("Entity that want to delete is Null");
-    }
-    Optional<T> e = repository.findById(t.getId());
-    if (!e.isPresent()) {
-      throw new DataNotFoundException("Data Not Found");
-    }
-    T entity = e.get();
-    entity.setRecorded(false);
+    validate(t);
+    T entity = getOne(t.getId());
+    entity.setDeleteFlag(true);
     entity = (T) repository.save(entity);
     return entity;
+  }
+
+  @Override
+  public T hardDelete(T t) throws DataNotFoundException, CrudOperationException {
+    validate(t);
+    T saved = getOne(t.getId());
+    repository.delete(saved);
+    return saved;
+  }
+
+  private void validate(T t) throws CrudOperationException {
+    if (t == null) {
+      throw new CrudOperationException(ENTITY_NULL_MESSAGES);
+    }
   }
 }

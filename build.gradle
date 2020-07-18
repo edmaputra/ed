@@ -20,6 +20,7 @@ subprojects {
   targetCompatibility = 11
 
   repositories {
+    mavenLocal()
     mavenCentral()
     jcenter()
   }
@@ -33,11 +34,9 @@ subprojects {
   dependencies {
     implementation 'org.apache.commons:commons-lang3:3.10'
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-    testImplementation "org.mockito:mockito-core:${mockitoVersion}"
-    testImplementation "org.assertj:assertj-core:${assertjVersion}"
-
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+      exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
   }
 
   test {
@@ -47,13 +46,5 @@ subprojects {
   java {
     withSourcesJar()
     withJavadocJar()
-  }
-
-  publishing {
-    publications {
-      maven(MavenPublication) {
-        from components.java
-      }
-    }
   }
 }

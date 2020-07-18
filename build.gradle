@@ -2,36 +2,32 @@ plugins {
   id 'java'
   id 'maven-publish'
   id "net.ltgt.apt" version "0.21"
-}
-
-group = 'io.github.edmaputra'
-version = "${edVersion}"
-
-sourceCompatibility = 11
-targetCompatibility = 11
-
-repositories {
-  mavenLocal()
-  jcenter()
-  mavenCentral()
+  id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
 }
 
 subprojects {
+  group = 'io.github.edmaputra.ed'
+  version = "${edVersion}"
+
   apply plugin: 'java'
+  apply plugin: 'java-library'
   apply plugin: 'maven-publish'
   apply plugin: 'net.ltgt.apt'
   apply plugin: 'net.ltgt.apt-idea'
-
-  group = 'io.github.edmaputra.ed'
-  version = "${edVersion}"
+  apply plugin: 'io.spring.dependency-management'
 
   sourceCompatibility = 11
   targetCompatibility = 11
 
   repositories {
-    mavenLocal()
-    jcenter()
     mavenCentral()
+    jcenter()
+  }
+
+  dependencyManagement {
+    imports {
+      mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+    }
   }
 
   dependencies {

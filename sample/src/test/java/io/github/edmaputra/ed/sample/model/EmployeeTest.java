@@ -1,17 +1,12 @@
 package io.github.edmaputra.ed.sample.model;
 
-import io.github.edmaputra.ed.core.constant.Contract;
-import io.github.edmaputra.ed.core.model.Gender;
-import io.github.edmaputra.ed.core.model.MaritalStatus;
+import io.github.edmaputra.ed.edbase.model.Gender;
+import io.github.edmaputra.ed.edbase.model.MaritalStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

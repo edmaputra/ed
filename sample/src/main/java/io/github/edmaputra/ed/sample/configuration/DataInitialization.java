@@ -1,14 +1,13 @@
 package io.github.edmaputra.ed.sample.configuration;
 
-import io.github.edmaputra.ed.core.exception.CrudOperationException;
-import io.github.edmaputra.ed.core.model.Gender;
-import io.github.edmaputra.ed.core.model.MaritalStatus;
+import io.github.edmaputra.ed.edbase.exception.CrudOperationException;
+import io.github.edmaputra.ed.edbase.model.Gender;
+import io.github.edmaputra.ed.edbase.model.MaritalStatus;
 import io.github.edmaputra.ed.sample.model.Employee;
 import io.github.edmaputra.ed.sample.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.Month;
 
@@ -94,7 +93,7 @@ public class DataInitialization {
     );
   }
 
-//  @PostConstruct
+  //  @PostConstruct
   public void save() throws CrudOperationException {
     service.add(e0);
     service.add(e1);

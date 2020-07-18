@@ -1,6 +1,6 @@
 package io.github.edmaputra.ed.sample.repository;
 
-import io.github.edmaputra.ed.data.predicate.BasePredicate;
+import io.github.edmaputra.ed.edbase.predicate.BasePredicate;
 import io.github.edmaputra.ed.sample.DataInit;
 import io.github.edmaputra.ed.sample.model.Employee;
 import io.github.edmaputra.ed.sample.predicate.EmployeePredicate;
@@ -24,7 +24,7 @@ public class EmployeeRepositoryQueryDslTest {
   @Autowired
   EmployeeRepository employeeRepository;
 
-  BasePredicate employeePredicate;
+  BasePredicate<Employee> employeePredicate;
 
   DataInit data;
 

@@ -19,7 +19,7 @@ public class QEmployee extends EntityPathBase<Employee> {
 
     public static final QEmployee employee = new QEmployee("employee");
 
-    public final io.github.edmaputra.ed.core.model.QBasePerson _super = new io.github.edmaputra.ed.core.model.QBasePerson(this);
+    public final io.github.edmaputra.ed.edbase.model.QBasePerson _super = new io.github.edmaputra.ed.edbase.model.QBasePerson(this);
 
     public final NumberPath<Integer> age = createNumber("age", Integer.class);
 
@@ -45,7 +45,7 @@ public class QEmployee extends EntityPathBase<Employee> {
     public final StringPath firstName = _super.firstName;
 
     //inherited
-    public final EnumPath<io.github.edmaputra.ed.core.model.Gender> gender = _super.gender;
+    public final EnumPath<io.github.edmaputra.ed.edbase.model.Gender> gender = _super.gender;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -53,7 +53,7 @@ public class QEmployee extends EntityPathBase<Employee> {
     public final StringPath lastName = _super.lastName;
 
     //inherited
-    public final EnumPath<io.github.edmaputra.ed.core.model.MaritalStatus> maritalStatus = _super.maritalStatus;
+    public final EnumPath<io.github.edmaputra.ed.edbase.model.MaritalStatus> maritalStatus = _super.maritalStatus;
 
     //inherited
     public final StringPath middleName = _super.middleName;

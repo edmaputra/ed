@@ -1,6 +1,6 @@
 package io.github.edmaputra.ed.sample.service.impl;
 
-import io.github.edmaputra.ed.data.service.impl.BaseServiceImpl;
+import io.github.edmaputra.ed.edbase.service.impl.BaseServiceImpl;
 import io.github.edmaputra.ed.sample.model.Employee;
 import io.github.edmaputra.ed.sample.predicate.EmployeePredicate;
 import io.github.edmaputra.ed.sample.repository.EmployeeRepository;

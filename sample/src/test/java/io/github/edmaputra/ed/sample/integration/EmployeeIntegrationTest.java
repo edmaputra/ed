@@ -2,8 +2,8 @@ package io.github.edmaputra.ed.sample.integration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.edmaputra.ed.core.model.Gender;
-import io.github.edmaputra.ed.core.model.MaritalStatus;
+import io.github.edmaputra.ed.edbase.model.Gender;
+import io.github.edmaputra.ed.edbase.model.MaritalStatus;
 import io.github.edmaputra.ed.sample.SampleApplication;
 import io.github.edmaputra.ed.sample.model.Employee;
 import org.json.JSONException;
@@ -199,7 +199,7 @@ public class EmployeeIntegrationTest {
       Employee employee, String firstName, String middleName, String lastName,
       Gender gender, MaritalStatus maritalStatus, String birthPlace, LocalDate birthDate,
       String phoneNumber, String email
-  ){
+  ) {
     assertThat(employee.getFirstName()).isEqualToIgnoringCase(firstName);
     assertThat(employee.getMiddleName()).isEqualToIgnoringCase(middleName);
     assertThat(employee.getLastName()).isEqualToIgnoringCase(lastName);

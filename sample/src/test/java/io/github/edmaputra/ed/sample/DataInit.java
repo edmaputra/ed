@@ -1,7 +1,7 @@
 package io.github.edmaputra.ed.sample;
 
-import io.github.edmaputra.ed.core.model.Gender;
-import io.github.edmaputra.ed.core.model.MaritalStatus;
+import io.github.edmaputra.ed.edbase.model.Gender;
+import io.github.edmaputra.ed.edbase.model.MaritalStatus;
 import io.github.edmaputra.ed.sample.model.Employee;
 
 import java.time.LocalDate;

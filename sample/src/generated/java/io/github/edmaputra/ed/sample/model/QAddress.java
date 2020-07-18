@@ -19,7 +19,7 @@ public class QAddress extends EntityPathBase<Address> {
 
     public static final QAddress address = new QAddress("address");
 
-    public final io.github.edmaputra.ed.core.model.QBaseAddress _super = new io.github.edmaputra.ed.core.model.QBaseAddress(this);
+    public final io.github.edmaputra.ed.edbase.model.QBaseAddress _super = new io.github.edmaputra.ed.edbase.model.QBaseAddress(this);
 
     //inherited
     public final StringPath city = _super.city;

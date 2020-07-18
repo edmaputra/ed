@@ -1,7 +1,7 @@
 create table employee (id bigint not null,
 create_time timestamp,
 creator varchar(120),
-recorded boolean not null,
+delete_flag boolean not null,
 update_time timestamp,
 updater varchar(120),
 version varchar(10),

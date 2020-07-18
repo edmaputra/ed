@@ -1,10 +1,4 @@
 rootProject.name = 'ed'
 
-include('core')
-project(':core').projectDir = file('core')
-include 'data'
-project(':data').projectDir = file('data')
-include 'web'
-project(':web').projectDir = file('web')
+include 'ed-base'
 include 'sample'
-project(':sample').projectDir = file('sample')

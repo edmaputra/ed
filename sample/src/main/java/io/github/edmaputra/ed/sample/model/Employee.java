@@ -1,9 +1,9 @@
 package io.github.edmaputra.ed.sample.model;
 
-import io.github.edmaputra.ed.core.annotation.Filterable;
-import io.github.edmaputra.ed.core.model.BasePerson;
-import io.github.edmaputra.ed.core.model.Gender;
-import io.github.edmaputra.ed.core.model.MaritalStatus;
+import io.github.edmaputra.ed.edbase.annotation.Filterable;
+import io.github.edmaputra.ed.edbase.model.BasePerson;
+import io.github.edmaputra.ed.edbase.model.Gender;
+import io.github.edmaputra.ed.edbase.model.MaritalStatus;
 import org.hibernate.annotations.Filter;
 
 import javax.persistence.Entity;

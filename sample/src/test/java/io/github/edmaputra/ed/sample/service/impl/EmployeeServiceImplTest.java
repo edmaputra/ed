@@ -1,10 +1,10 @@
 package io.github.edmaputra.ed.sample.service.impl;
 
-import io.github.edmaputra.ed.core.exception.CrudOperationException;
-import io.github.edmaputra.ed.core.exception.DataEmptyException;
-import io.github.edmaputra.ed.core.exception.DataNotFoundException;
-import io.github.edmaputra.ed.core.model.Gender;
-import io.github.edmaputra.ed.core.model.MaritalStatus;
+import io.github.edmaputra.ed.edbase.exception.CrudOperationException;
+import io.github.edmaputra.ed.edbase.exception.DataEmptyException;
+import io.github.edmaputra.ed.edbase.exception.DataNotFoundException;
+import io.github.edmaputra.ed.edbase.model.Gender;
+import io.github.edmaputra.ed.edbase.model.MaritalStatus;
 import io.github.edmaputra.ed.sample.DataInit;
 import io.github.edmaputra.ed.sample.model.Employee;
 import io.github.edmaputra.ed.sample.predicate.EmployeePredicate;

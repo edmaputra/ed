@@ -1,13 +1,13 @@
 package io.github.edmaputra.ed.sample.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.edmaputra.ed.core.exception.CrudOperationException;
-import io.github.edmaputra.ed.core.exception.DataEmptyException;
-import io.github.edmaputra.ed.core.exception.DataNotFoundException;
+import io.github.edmaputra.ed.edbase.exception.CrudOperationException;
+import io.github.edmaputra.ed.edbase.exception.DataEmptyException;
+import io.github.edmaputra.ed.edbase.exception.DataNotFoundException;
 import io.github.edmaputra.ed.sample.DataInit;
 import io.github.edmaputra.ed.sample.model.Employee;
 import io.github.edmaputra.ed.sample.service.EmployeeService;
-import io.github.edmaputra.ed.web.util.ResponseUtil;
+import io.github.edmaputra.ed.edbase.util.ResponseUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

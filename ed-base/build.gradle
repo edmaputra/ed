@@ -93,9 +93,9 @@ publishing {
   }
 }
 
-def signingKey = project.hasProperty("PGP_SIGNING_KEY") ? project.property("PGP_SIGNING_KEY") : 'pgp_signing_key'
-def signingPassword = project.hasProperty("PGP_SIGNING_PASSWORD") ? project.property("PGP_SIGNING_PASSWORD") : 'pgp_signing_password'
-
+def signingKey = project.hasProperty("PGP_SIGNING_KEY") ? project.property("PGP_SIGNING_KEY") : 'pgp_signing_key' as String
+def signingPassword = project.hasProperty("PGP_SIGNING_PASSWORD") ? project.property("PGP_SIGNING_PASSWORD") : 'pgp_signing_password' as String
+println signingKey
 signing {
   useInMemoryPgpKeys(signingKey, signingPassword)
   sign publishing.publications.mavenJava

@@ -41,6 +41,8 @@ sourceSets {
 
 def sonatypeUsername = project.hasProperty("SONATYPE_USERNAME") ? project.property("SONATYPE_USERNAME") : 'username'
 def sonatypePassword = project.hasProperty("SONATYPE_PASSWORD") ? project.property("SONATYPE_PASSWORD") : 'password'
+def signingKey = project.hasProperty("PGP_SIGNING_KEY") ? project.property("PGP_SIGNING_KEY") : 'pgp_signing_key'
+def signingPassword = project.hasProperty("PGP_SIGNING_PASSWORD") ? project.property("PGP_SIGNING_PASSWORD") : 'pgp_signing_password'
 
 publishing {
   publications {
@@ -93,9 +95,7 @@ publishing {
   }
 }
 
-def signingKey = project.hasProperty("PGP_SIGNING_KEY") ? project.property("PGP_SIGNING_KEY") : 'pgp_signing_key' as String
-def signingPassword = project.hasProperty("PGP_SIGNING_PASSWORD") ? project.property("PGP_SIGNING_PASSWORD") : 'pgp_signing_password' as String
-println signingKey
+
 signing {
   useInMemoryPgpKeys(signingKey, signingPassword)
   sign publishing.publications.mavenJava

@@ -1,17 +1,16 @@
 plugins {
   id 'java'
+  id 'java-library'
   id 'maven-publish'
   id "net.ltgt.apt" version "0.21"
   id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
 }
 
 subprojects {
-  group = 'io.github.edmaputra.ed'
+  group = 'io.github.edmaputra'
   version = "${edVersion}"
 
   apply plugin: 'java'
-  apply plugin: 'java-library'
-  apply plugin: 'maven-publish'
   apply plugin: 'net.ltgt.apt'
   apply plugin: 'net.ltgt.apt-idea'
   apply plugin: 'io.spring.dependency-management'
@@ -41,10 +40,5 @@ subprojects {
 
   test {
     useJUnitPlatform()
-  }
-
-  java {
-    withSourcesJar()
-    withJavadocJar()
   }
 }

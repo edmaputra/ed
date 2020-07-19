@@ -83,15 +83,17 @@ publishing {
       def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
       url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
       credentials {
-        username = "${sonatypeUsername}"
-        password = "${sonatypePassword}"
+        username = project.hasProperty("SONATYPE_USERNAME") ? project.property("SONATYPE_USERNAME") : 'username'
+        password = project.hasProperty("SONATYPE_PASSWORD") ? project.property("SONATYPE_PASSWORD") : 'abcde'
       }
     }
   }
 }
 
 signing {
-  useInMemoryPgpKeys("${pgpSigningKey}", "${pgpSigningPassword}")
+  useInMemoryPgpKeys(
+      project.hasProperty("PGP_SIGNING_KEY") ? project.property("PGP_SIGNING_KEY") : 'pgp_signing_key' as String,
+      project.hasProperty("PGP_SIGNING_PASSWORD") ? project.property("PGP_SIGNING_PASSWORD") : 'pgp_signing_password' as String)
   sign publishing.publications.mavenJava
 }
 

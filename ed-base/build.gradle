@@ -39,24 +39,11 @@ sourceSets {
   }
 }
 
-//def sonatypeUsername = project.hasProperty("SONATYPE_USERNAME") ? project.property("SONATYPE_USERNAME") : 'username'
-//def sonatypePassword = project.hasProperty("SONATYPE_PASSWORD") ? project.property("SONATYPE_PASSWORD") : 'password'
-def signingKey = project.hasProperty("PGP_SIGNING_KEY") ? project.property("PGP_SIGNING_KEY") : 'pgp_signing_key'
-def signingPassword = project.hasProperty("PGP_SIGNING_PASSWORD") ? project.property("PGP_SIGNING_PASSWORD") : 'pgp_signing_password'
-
 publishing {
   publications {
     mavenJava(MavenPublication) {
       artifactId = 'ed-base'
       from components.java
-      versionMapping {
-        usage('java-api') {
-          fromResolutionOf('runtimeClasspath')
-        }
-        usage('java-runtime') {
-          fromResolutionResult()
-        }
-      }
       pom {
         name = 'ed-base'
         description = 'Base component for basic CRUD operation with Spring Boot'
@@ -88,8 +75,10 @@ publishing {
       def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
       url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
       credentials {
-        username = "${sonatypeUsername}"
-        password = "${sonatypePassword}"
+        def sonatypeUsername = project.hasProperty("SONATYPE_USERNAME") ? project.property("SONATYPE_USERNAME") : 'username'
+        def sonatypePassword = project.hasProperty("SONATYPE_PASSWORD") ? project.property("SONATYPE_PASSWORD") : 'password'
+        username = sonatypeUsername
+        password = sonatypePassword
       }
     }
   }
@@ -97,6 +86,8 @@ publishing {
 
 
 signing {
+  def signingKey = project.hasProperty("PGP_SIGNING_KEY") ? project.property("PGP_SIGNING_KEY") : 'pgp_signing_key'
+  def signingPassword = project.hasProperty("PGP_SIGNING_PASSWORD") ? project.property("PGP_SIGNING_PASSWORD") : 'pgp_signing_password'
   useInMemoryPgpKeys(signingKey, signingPassword)
   sign publishing.publications.mavenJava
 }

@@ -29,7 +29,7 @@ import java.time.ZonedDateTime;
 public abstract class BaseEntity implements Serializable {
 
   @NotBlank(message = "Version should not be blank")
-  @Size(max = DbColumn.VERSION_LENGTH, min = 1, message = "Version length should be 1 - " + DbColumn.VERSION_LENGTH)
+  @Size(max = DbColumn.VERSION_LENGTH, min = 1, message = "Version length should be between 1 - " + DbColumn.VERSION_LENGTH)
   @Column(length = DbColumn.VERSION_LENGTH)
   protected String version;
 

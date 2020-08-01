@@ -39,7 +39,7 @@ public interface BaseRepository<T extends BaseIdEntity<ID>, ID extends Serializa
    * and deleteFlag parameter in boolean type
    *
    * @param deleteFlag is deleted or not
-   * @param pageable pageable entity
+   * @param pageable   pageable entity
    * @return a page of entities
    */
   Optional<Page<T>> findByDeleteFlag(boolean deleteFlag, Pageable pageable);

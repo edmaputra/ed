@@ -8,9 +8,9 @@ import java.io.Serializable;
 /**
  * Base Entity with Id
  *
+ * @param <ID> type of Id
  * @author edmaputra
  * @since 0.0.1
- * @param <ID> type of Id
  */
 @MappedSuperclass
 public abstract class BaseIdEntity<ID extends Serializable> extends BaseEntity {

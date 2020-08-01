@@ -3,6 +3,7 @@ package io.github.edmaputra.ed.edbase.controller.advice;
 import io.github.edmaputra.ed.edbase.exception.CrudOperationException;
 import io.github.edmaputra.ed.edbase.exception.DataEmptyException;
 import io.github.edmaputra.ed.edbase.exception.DataNotFoundException;
+import io.github.edmaputra.ed.edbase.model.error.ErrorModel;
 import io.github.edmaputra.ed.edbase.util.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,6 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class BaseControllerExceptionHandler {
 
@@ -22,7 +21,7 @@ public abstract class BaseControllerExceptionHandler {
       CrudOperationException.class,
       MethodArgumentTypeMismatchException.class
   })
-  protected ResponseEntity<Object> onCrudOperationException(
+  protected ResponseEntity<ErrorModel> onCrudOperationException(
       Exception ex) {
     return ResponseUtil.createExceptionResponse(ex, HttpStatus.BAD_REQUEST);
   }
@@ -31,48 +30,29 @@ public abstract class BaseControllerExceptionHandler {
       DataEmptyException.class,
       DataNotFoundException.class
   })
-  protected ResponseEntity<Object> onDataEmptyOrNotFoundException(Exception ex) {
+  protected ResponseEntity<ErrorModel> onDataEmptyOrNotFoundException(Exception ex) {
     return ResponseUtil.createExceptionResponse(ex, HttpStatus.NOT_FOUND);
   }
 
   @ExceptionHandler(ConstraintViolationException.class)
-  protected ResponseEntity<Object> onConstraintValidationException(ConstraintViolationException ex) {
-    String message = ex.getMessage();
-    List<String> errors = new ArrayList<>();
+  protected ResponseEntity<ErrorModel> onConstraintValidationException(ConstraintViolationException ex) {
+    ErrorModel errorModel = new ErrorModel();
     for (ConstraintViolation violation : ex.getConstraintViolations()) {
-      errors.add(violation.getPropertyPath().toString() + "; " + violation.getMessage());
+      errorModel.addErrors(violation.getPropertyPath().toString(), violation.getMessage());
     }
-    ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, message, errors);
-    return new ResponseEntity<>(apiError, apiError.getStatus());
+    errorModel.setStatus(HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(errorModel, errorModel.getStatus());
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
-  protected ResponseEntity<Object> onMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-    String message = ex.getMessage();
-    List<String> errors = new ArrayList<>();
+  protected ResponseEntity<ErrorModel> onMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    ErrorModel errorModel = new ErrorModel();
+
     for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
-      errors.add(fieldError.getField() + " " + fieldError.getDefaultMessage());
+      errorModel.addErrors(fieldError.getField(), fieldError.getDefaultMessage());
     }
-    ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, message, errors);
-    return new ResponseEntity<>(apiError, apiError.getStatus());
-  }
-
-  static class Violation {
-    private String field;
-    private String messages;
-
-    public Violation(String field, String messages) {
-      this.field = field;
-      this.messages = messages;
-    }
-
-    public String getField() {
-      return field;
-    }
-
-    public String getMessages() {
-      return messages;
-    }
+    errorModel.setStatus(HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(errorModel, errorModel.getStatus());
   }
 
 }

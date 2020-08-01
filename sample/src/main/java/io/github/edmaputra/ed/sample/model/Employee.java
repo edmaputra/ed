@@ -4,7 +4,6 @@ import io.github.edmaputra.ed.edbase.annotation.Filterable;
 import io.github.edmaputra.ed.edbase.model.BasePerson;
 import io.github.edmaputra.ed.edbase.model.Gender;
 import io.github.edmaputra.ed.edbase.model.MaritalStatus;
-import org.hibernate.annotations.Filter;
 
 import javax.persistence.Entity;
 import java.time.LocalDate;

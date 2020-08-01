@@ -8,5 +8,6 @@ public class Contract {
 
   public static final String ZONED_DATE_TIME_JSON_PATTERN = "yyyy-MM-dd'T'HH:mm:ssXXXXX";
 
-  private Contract(){}
+  private Contract() {
+  }
 }

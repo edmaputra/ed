@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.edmaputra.ed.edbase.model.Gender;
 import io.github.edmaputra.ed.edbase.model.MaritalStatus;
+import io.github.edmaputra.ed.edbase.util.ResponseUtil;
 import io.github.edmaputra.ed.sample.SampleApplication;
 import io.github.edmaputra.ed.sample.model.Employee;
 import org.json.JSONException;
@@ -29,6 +30,11 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,35 +62,31 @@ public class EmployeeIntegrationTest {
 
   @Test
   @Order(0)
-  public void testGetAllEmployees_shouldNotFound() throws JSONException {
-    String expected = "{statusCode:404, status:\"NOT_FOUND\", message:\"Data Empty\"}";
+  public void testGetAllEmployees_shouldNotFound() throws JSONException, JsonProcessingException {
+    Map<String, List<String>> errors = new HashMap<>();
+    errors.put("error", Collections.singletonList("Data Empty"));
+    String expectedResponse = objectMapper.writeValueAsString(ResponseUtil.createExceptionResponse
+        (errors, HttpStatus.NOT_FOUND).getBody());
 
     ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + port + "/employees", String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    JSONAssert.assertEquals(expected, response.getBody(), JSONCompareMode.LENIENT);
+    JSONAssert.assertEquals(expectedResponse, response.getBody(), JSONCompareMode.LENIENT);
   }
 
   @Test
   @Order(1)
-  public void testGetOneEmployee_shouldNotFound() throws JSONException {
-    String expected = "{statusCode:404, status:\"NOT_FOUND\", message:\"Data Not Found\"}";
+  public void testGetOneEmployee_shouldNotFound() throws JSONException, JsonProcessingException {
+    Map<String, List<String>> errors = new HashMap<>();
+    errors.put("error", Collections.singletonList("Data Not Found"));
+    String expectedResponse = objectMapper.writeValueAsString(ResponseUtil.createExceptionResponse
+        (errors, HttpStatus.NOT_FOUND).getBody());
     long id = 1;
 
     ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + port + "/employees/" + id, String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    JSONAssert.assertEquals(expected, response.getBody(), JSONCompareMode.LENIENT);
-  }
-
-  @Test
-  @Order(2)
-  public void testGetOneEmployeeWithNonNumber_shouldBadRequest() {
-    String expected = "{statusCode:404, status:\"NOT_FOUND\", message:\"Data Not Found\"}";
-
-    ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + port + "/employees/null", String.class);
-
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    JSONAssert.assertEquals(expectedResponse, response.getBody(), JSONCompareMode.LENIENT);
   }
 
   @Test
@@ -98,13 +100,15 @@ public class EmployeeIntegrationTest {
 
   @Test
   @Order(4)
-  public void testGetAllEmployeesWithFilter_shouldNotFound() throws JSONException {
-    String expected = "{statusCode:404, status:\"NOT_FOUND\", message:\"Data Empty\"}";
-
+  public void testGetAllEmployeesWithFilter_shouldNotFound() throws JSONException, JsonProcessingException {
+    Map<String, List<String>> errors = new HashMap<>();
+    errors.put("error", Collections.singletonList("Data Empty"));
+    String expectedResponse = objectMapper.writeValueAsString(ResponseUtil.createExceptionResponse
+        (errors, HttpStatus.NOT_FOUND).getBody());
     ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + port + "/employees?filter=wkekek", String.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    JSONAssert.assertEquals(expected, response.getBody(), JSONCompareMode.LENIENT);
+    JSONAssert.assertEquals(expectedResponse, response.getBody(), JSONCompareMode.LENIENT);
   }
 
   @Test
@@ -115,7 +119,6 @@ public class EmployeeIntegrationTest {
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     JSONAssert.assertEquals("{content:[1]}", Objects.requireNonNull(response.getBody()), new ArraySizeComparator(JSONCompareMode.LENIENT));
   }
-
 
   @Test
   @Order(6)
@@ -133,7 +136,6 @@ public class EmployeeIntegrationTest {
     assertExpectResultOfEmployeeData(actualEmployee, "Muhammad", "", "Michael", Gender.MALE,
         MaritalStatus.SINGLE, "Bandung", LocalDate.of(2000, Month.APRIL, 10), "11223344556678",
         "", OperationType.INSERT);
-
   }
 
   @Test
@@ -203,6 +205,28 @@ public class EmployeeIntegrationTest {
         LocalDate.of(1982, Month.MAY, 21),
         "08881234578",
         "ahmad.yusuf@mail.com", OperationType.DELETE);
+  }
+
+  @Test
+  @Order(9)
+  public void testAddEmployee_shouldThrowIllegalArgumentException() throws JsonProcessingException, JSONException {
+    Employee newEmployee = new Employee(
+        "M", "", "", Gender.MALE, MaritalStatus.SINGLE, "Bandung",
+        LocalDate.of(2000, Month.APRIL, 10), "11223344556678", "asas"
+    );
+
+    ResponseEntity<String> response =
+        restTemplate.postForEntity("http://localhost:" + port + "/employees/", newEmployee, String.class);
+
+    Map<String, List<String>> errors = new HashMap<>();
+    errors.put("firstName", Collections.singletonList("Length should be between 2 - 120"));
+    errors.put("lastName", Arrays.asList("Length should be between 2 - 120", "must not be blank"));
+    errors.put("email", Collections.singletonList("must be a well-formed email address"));
+    String expectedResponse = objectMapper.writeValueAsString(ResponseUtil.createExceptionResponse
+        (errors, HttpStatus.BAD_REQUEST).getBody());
+
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    JSONAssert.assertEquals(expectedResponse, response.getBody(), JSONCompareMode.LENIENT);
   }
 
   private void assertExpectResultOfEmployeeData(

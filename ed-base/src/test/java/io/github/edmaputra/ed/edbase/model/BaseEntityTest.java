@@ -4,7 +4,7 @@ import io.github.edmaputra.ed.edbase.annotation.Filterable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.Instant;
+import java.time.ZonedDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,8 +17,8 @@ class BaseEntityTest {
   private static final String DEFAULT_UPDATER = "";
   private static final boolean DEFAULT_DELETE_FLAG = false;
 
-  private static final Instant CREATION_TIME = Instant.ofEpochMilli(1586275079);
-  private static final Instant UPDATE_TIME = Instant.ofEpochMilli(1586275079);
+  private static final ZonedDateTime CREATION_TIME = ZonedDateTime.now();
+  private static final ZonedDateTime UPDATE_TIME = ZonedDateTime.now().plusMinutes(20);
 
   @BeforeEach
   void init() {
@@ -42,8 +42,6 @@ class BaseEntityTest {
     assertThat(baseEntity.getUpdater()).isEqualTo(DEFAULT_UPDATER);
     assertThat(baseEntity.isDeleteFlag()).isEqualTo(DEFAULT_DELETE_FLAG);
 
-    assertThat(baseEntity.getCreateTime()).isNotNull();
-    assertThat(baseEntity.getUpdateTime()).isNotNull();
   }
 
   @Test
@@ -59,10 +57,10 @@ class BaseEntityTest {
 
   @Test
   void givenBaseEntity_whenSetterInvoked_thenShouldReturnExpectedValue() {
-    Instant time = Instant.ofEpochMilli(1586275448);
+    ZonedDateTime time = ZonedDateTime.now();
     baseEntity.setVersion("2");
     baseEntity.setCreateTime(time);
-    baseEntity.setUpdateTime(time);
+    baseEntity.setUpdateTime(time.plusMinutes(20));
     baseEntity.setCreator("USER");
     baseEntity.setUpdater("USER");
     baseEntity.setDeleteFlag(false);
@@ -73,7 +71,7 @@ class BaseEntityTest {
     assertThat(baseEntity.isDeleteFlag()).isEqualTo(false);
 
     assertThat(baseEntity.getCreateTime()).isEqualTo(time);
-    assertThat(baseEntity.getUpdateTime()).isEqualTo(time);
+    assertThat(baseEntity.getUpdateTime()).isEqualTo(time.plusMinutes(20));
   }
 
   private static class BaseEntityImpl extends BaseEntity {
@@ -82,7 +80,7 @@ class BaseEntityTest {
       super();
     }
 
-    public BaseEntityImpl(String version, Instant createdOn, String creator, Instant updatedOn, String updater, boolean recorded) {
+    public BaseEntityImpl(String version, ZonedDateTime createdOn, String creator, ZonedDateTime updatedOn, String updater, boolean recorded) {
       super(version, createdOn, creator, updatedOn, updater, recorded);
     }
   }

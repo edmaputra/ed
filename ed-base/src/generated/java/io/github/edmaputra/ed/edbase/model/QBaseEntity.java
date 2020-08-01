@@ -19,15 +19,19 @@ public class QBaseEntity extends EntityPathBase<BaseEntity> {
 
     public static final QBaseEntity baseEntity = new QBaseEntity("baseEntity");
 
-    public final DateTimePath<java.time.Instant> createTime = createDateTime("createTime", java.time.Instant.class);
+    public final DateTimePath<java.time.ZonedDateTime> createTime = createDateTime("createTime", java.time.ZonedDateTime.class);
 
     public final StringPath creator = createString("creator");
 
+    public final StringPath deleteBy = createString("deleteBy");
+
     public final BooleanPath deleteFlag = createBoolean("deleteFlag");
+
+    public final DateTimePath<java.time.ZonedDateTime> deleteTime = createDateTime("deleteTime", java.time.ZonedDateTime.class);
 
     public final StringPath updater = createString("updater");
 
-    public final DateTimePath<java.time.Instant> updateTime = createDateTime("updateTime", java.time.Instant.class);
+    public final DateTimePath<java.time.ZonedDateTime> updateTime = createDateTime("updateTime", java.time.ZonedDateTime.class);
 
     public final StringPath version = createString("version");
 

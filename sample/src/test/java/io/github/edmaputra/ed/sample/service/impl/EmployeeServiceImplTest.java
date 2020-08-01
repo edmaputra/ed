@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -41,6 +42,9 @@ class EmployeeServiceImplTest {
   @Mock
   EmployeePredicate predicate;
 
+  @Mock
+  AuditorAware<String> auditorAware;
+
   @InjectMocks
   private EmployeeServiceImpl service;
 
@@ -60,6 +64,8 @@ class EmployeeServiceImplTest {
     employees = init.getAllEmployee();
 
     employeesPage = new PageImpl<>(employees);
+
+    service.setAuditorAware(auditorAware);
   }
 
 
@@ -183,6 +189,7 @@ class EmployeeServiceImplTest {
     e0.setId(2L);
     doReturn(Optional.of(e0)).when(repository).findById(anyLong());
     doReturn(e0).when(repository).save(any(Employee.class));
+    doReturn(Optional.of("anonymous")).when(auditorAware).getCurrentAuditor();
 
     Employee employee = service.delete(e0);
 

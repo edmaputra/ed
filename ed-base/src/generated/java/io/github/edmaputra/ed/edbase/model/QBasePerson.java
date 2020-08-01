@@ -26,13 +26,19 @@ public class QBasePerson extends EntityPathBase<BasePerson<? extends java.io.Ser
     public final StringPath birthPlace = createString("birthPlace");
 
     //inherited
-    public final DateTimePath<java.time.Instant> createTime = _super.createTime;
+    public final DateTimePath<java.time.ZonedDateTime> createTime = _super.createTime;
 
     //inherited
     public final StringPath creator = _super.creator;
 
     //inherited
+    public final StringPath deleteBy = _super.deleteBy;
+
+    //inherited
     public final BooleanPath deleteFlag = _super.deleteFlag;
+
+    //inherited
+    public final DateTimePath<java.time.ZonedDateTime> deleteTime = _super.deleteTime;
 
     public final StringPath email = createString("email");
 
@@ -55,7 +61,7 @@ public class QBasePerson extends EntityPathBase<BasePerson<? extends java.io.Ser
     public final StringPath updater = _super.updater;
 
     //inherited
-    public final DateTimePath<java.time.Instant> updateTime = _super.updateTime;
+    public final DateTimePath<java.time.ZonedDateTime> updateTime = _super.updateTime;
 
     //inherited
     public final StringPath version = _super.version;

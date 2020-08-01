@@ -29,6 +29,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -54,7 +55,7 @@ public class EmployeeIntegrationTest {
   }
 
   @Test
-  @Order(1000)
+  @Order(0)
   public void testGetAllEmployees_shouldNotFound() throws JSONException {
     String expected = "{statusCode:404, status:\"NOT_FOUND\", message:\"Data Empty\"}";
 
@@ -65,7 +66,7 @@ public class EmployeeIntegrationTest {
   }
 
   @Test
-  @Order(1001)
+  @Order(1)
   public void testGetOneEmployee_shouldNotFound() throws JSONException {
     String expected = "{statusCode:404, status:\"NOT_FOUND\", message:\"Data Not Found\"}";
     long id = 1;
@@ -77,7 +78,7 @@ public class EmployeeIntegrationTest {
   }
 
   @Test
-  @Order(1002)
+  @Order(2)
   public void testGetOneEmployeeWithNonNumber_shouldBadRequest() {
     String expected = "{statusCode:404, status:\"NOT_FOUND\", message:\"Data Not Found\"}";
 
@@ -87,16 +88,16 @@ public class EmployeeIntegrationTest {
   }
 
   @Test
-  @Order(1003)
+  @Order(3)
   @Sql(scripts = {"classpath:sql/add_data_1.sql"})
   public void testGetAllEmployees_shouldFound() throws JSONException {
     ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + port + "/employees", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-    JSONAssert.assertEquals("{content:[4]}", response.getBody(), new ArraySizeComparator(JSONCompareMode.LENIENT));
+    JSONAssert.assertEquals("{content:[4]}", Objects.requireNonNull(response.getBody()), new ArraySizeComparator(JSONCompareMode.LENIENT));
   }
 
   @Test
-  @Order(1004)
+  @Order(4)
   public void testGetAllEmployeesWithFilter_shouldNotFound() throws JSONException {
     String expected = "{statusCode:404, status:\"NOT_FOUND\", message:\"Data Empty\"}";
 
@@ -107,17 +108,17 @@ public class EmployeeIntegrationTest {
   }
 
   @Test
-  @Order(1005)
+  @Order(5)
   @Sql(scripts = {"classpath:sql/add_data_1.sql"})
   public void testGetAllEmployeesWithFilter_shouldFound() throws JSONException {
     ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + port + "/employees?filter=bangun", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-    JSONAssert.assertEquals("{content:[1]}", response.getBody(), new ArraySizeComparator(JSONCompareMode.LENIENT));
+    JSONAssert.assertEquals("{content:[1]}", Objects.requireNonNull(response.getBody()), new ArraySizeComparator(JSONCompareMode.LENIENT));
   }
 
 
   @Test
-  @Order(1006)
+  @Order(6)
   public void testAddEmployee_shouldCreatedAndReturnCorrectObject() throws JsonProcessingException {
     Employee newEmployee = new Employee(
         "Muhammad", "", "Michael", Gender.MALE, MaritalStatus.SINGLE, "Bandung",
@@ -129,13 +130,14 @@ public class EmployeeIntegrationTest {
     Employee actualEmployee = objectMapper.readValue(response.getBody(), Employee.class);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-    assertEmployeeAttribute(actualEmployee, "Muhammad", "", "Michael", Gender.MALE,
-        MaritalStatus.SINGLE, "Bandung", LocalDate.of(2000, Month.APRIL, 10), "11223344556678", "");
+    assertExpectResultOfEmployeeData(actualEmployee, "Muhammad", "", "Michael", Gender.MALE,
+        MaritalStatus.SINGLE, "Bandung", LocalDate.of(2000, Month.APRIL, 10), "11223344556678",
+        "", OperationType.INSERT);
 
   }
 
   @Test
-  @Order(1007)
+  @Order(7)
   @Sql(scripts = {"classpath:sql/add_data_2.sql"})
   public void testUpdateEmployee_shouldUpdateAndReturnCorrectObject() throws JsonProcessingException {
     checkCurrentData();
@@ -162,7 +164,7 @@ public class EmployeeIntegrationTest {
     Employee updatedEmployee = objectMapper.readValue(updateResponse.getBody(), Employee.class);
 
     assertThat(updateResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-    assertEmployeeAttribute(updatedEmployee,
+    assertExpectResultOfEmployeeData(updatedEmployee,
         "Adiba",
         "Dzakira",
         "Diatra",
@@ -171,11 +173,11 @@ public class EmployeeIntegrationTest {
         "Tarakan",
         LocalDate.of(2019, 2, 2),
         "123456789012",
-        "adiba.diatra@mail.id");
+        "adiba.diatra@mail.id", OperationType.UPDATE);
   }
 
   @Test
-  @Order(1008)
+  @Order(8)
   @Sql(scripts = {"classpath:sql/add_data_3.sql"})
   public void testDeleteEmployee_shouldDeleteAndReturnCorrectObject() throws JsonProcessingException {
     checkCurrentData();
@@ -191,29 +193,58 @@ public class EmployeeIntegrationTest {
     Employee deletedEmployee = objectMapper.readValue(deleteResponse.getBody(), Employee.class);
 
     assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-    assertThat(deletedEmployee.getId()).isEqualTo(employeeId);
-    assertThat(deletedEmployee.isDeleteFlag()).isTrue();
+    assertExpectResultOfEmployeeData(deletedEmployee,
+        "Ahmad",
+        "",
+        "Yusuf",
+        Gender.MALE,
+        MaritalStatus.SINGLE,
+        "Makassar",
+        LocalDate.of(1982, Month.MAY, 21),
+        "08881234578",
+        "ahmad.yusuf@mail.com", OperationType.DELETE);
   }
 
-  private void assertEmployeeAttribute(
+  private void assertExpectResultOfEmployeeData(
       Employee employee, String firstName, String middleName, String lastName,
       Gender gender, MaritalStatus maritalStatus, String birthPlace, LocalDate birthDate,
-      String phoneNumber, String email
+      String phoneNumber, String email, OperationType operationType
   ) {
-    assertThat(employee.getFirstName()).isEqualToIgnoringCase(firstName);
-    assertThat(employee.getMiddleName()).isEqualToIgnoringCase(middleName);
-    assertThat(employee.getLastName()).isEqualToIgnoringCase(lastName);
-    assertThat(employee.getGender()).isEqualTo(gender);
-    assertThat(employee.getMaritalStatus()).isEqualTo(maritalStatus);
-    assertThat(employee.getBirthPlace()).isEqualToIgnoringCase(birthPlace);
-    assertThat(employee.getBirthDate()).isEqualTo(birthDate);
-    assertThat(employee.getPhoneNumber()).isEqualToIgnoringCase(phoneNumber);
-    assertThat(employee.getEmail()).isEqualToIgnoringCase(email);
+    assertThat(firstName).isEqualToIgnoringCase(employee.getFirstName());
+    assertThat(middleName).isEqualToIgnoringCase(employee.getMiddleName());
+    assertThat(lastName).isEqualToIgnoringCase(employee.getLastName());
+    assertThat(gender).isEqualTo(employee.getGender());
+    assertThat(maritalStatus).isEqualTo(employee.getMaritalStatus());
+    assertThat(birthPlace).isEqualToIgnoringCase(birthPlace);
+    assertThat(birthDate).isEqualTo(employee.getBirthDate());
+    assertThat(phoneNumber).isEqualToIgnoringCase(employee.getPhoneNumber());
+    assertThat(email).isEqualToIgnoringCase(employee.getEmail());
+
+    if (operationType == OperationType.INSERT) {
+      assertThat(employee.getCreateTime()).isNotNull();
+      assertThat(employee.getCreator()).isNotNull();
+    }
+
+    if (operationType == OperationType.UPDATE){
+      assertThat(employee.getUpdateTime()).isNotNull();
+      assertThat(employee.getUpdater()).isNotNull();
+    }
+
+    if (operationType == OperationType.DELETE){
+      assertThat(employee.isDeleteFlag()).isTrue();
+      assertThat(employee.getDeleteTime()).isNotNull();
+      assertThat(employee.getDeleteBy()).isNotNull();
+    }
   }
 
   private void checkCurrentData() {
     ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + port + "/employees", String.class);
-    System.out.println(response.getBody());
+  }
+
+  enum OperationType {
+
+    INSERT, UPDATE, DELETE
+
   }
 
 }

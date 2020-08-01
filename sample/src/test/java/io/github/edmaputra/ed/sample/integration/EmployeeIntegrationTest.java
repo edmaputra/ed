@@ -225,12 +225,12 @@ public class EmployeeIntegrationTest {
       assertThat(employee.getCreator()).isNotNull();
     }
 
-    if (operationType == OperationType.UPDATE){
+    if (operationType == OperationType.UPDATE) {
       assertThat(employee.getUpdateTime()).isNotNull();
       assertThat(employee.getUpdater()).isNotNull();
     }
 
-    if (operationType == OperationType.DELETE){
+    if (operationType == OperationType.DELETE) {
       assertThat(employee.isDeleteFlag()).isTrue();
       assertThat(employee.getDeleteTime()).isNotNull();
       assertThat(employee.getDeleteBy()).isNotNull();

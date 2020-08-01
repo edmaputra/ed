@@ -2,7 +2,6 @@ package io.github.edmaputra.ed.edbase.controller.advice;
 
 import org.springframework.http.HttpStatus;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,7 +17,8 @@ public class ApiError {
 
   private String field;
 
-  public ApiError(){}
+  public ApiError() {
+  }
 
   public ApiError(HttpStatus status, String message, List<String> errors) {
     this.status = status;

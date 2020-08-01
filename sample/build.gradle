@@ -1,20 +1,20 @@
 plugins {
-	id 'org.springframework.boot' version "${springBootVersion}"
+  id 'org.springframework.boot' version "${springBootVersion}"
   id 'com.bmuschko.docker-spring-boot-application' version '6.4.0'
 }
 
 dependencies {
-	implementation project(':ed-base')
+  implementation project(':ed-base')
 
   runtimeOnly 'com.h2database:h2'
 
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+  testImplementation('org.springframework.boot:spring-boot-starter-test') {
+    exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+  }
 }
 
 test {
-	useJUnitPlatform()
+  useJUnitPlatform()
 }
 
 jar {

@@ -24,7 +24,7 @@ public class BaseServiceImpl<T extends BaseIdEntity<ID>, ID extends Serializable
     implements BaseService<T, ID> {
 
   private static final String ENTITY_NULL_MESSAGES = "Entity that want to delete is Null";
-  private static final String[] IGNORED_PROPERTIES = new String[] {"creator", "createTime"};
+  private static final String[] IGNORED_PROPERTIES = new String[]{"creator", "createTime"};
   private final BaseRepository<T, ID> repository;
   private final BasePredicate<T> predicate;
 

@@ -6,5 +6,8 @@ public class Contract {
   public static final String FILTERABLE_TYPE_MAP_KEY = "type";
   public static final String FILTERABLE_CATEGORY_MAP_KEY = "category";
 
-  private Contract(){}
+  public static final String ZONED_DATE_TIME_JSON_PATTERN = "yyyy-MM-dd'T'HH:mm:ssXXXXX";
+
+  private Contract() {
+  }
 }

@@ -1,18 +1,22 @@
 package io.github.edmaputra.ed.edbase.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.github.edmaputra.ed.edbase.constant.Contract;
 import io.github.edmaputra.ed.edbase.constant.DbColumn;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
+import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.ZonedDateTime;
 
 /**
  * Base Entity class in abstract form
@@ -21,24 +25,28 @@ import java.time.Instant;
  * @since 0.0.1
  */
 @MappedSuperclass
+@EntityListeners({AuditingEntityListener.class})
 public abstract class BaseEntity implements Serializable {
 
   @NotBlank(message = "Version should not be blank")
-  @Size(max = DbColumn.VERSION_LENGTH, min = 1, message = "Version length should be 1 - " + DbColumn.VERSION_LENGTH)
+  @Size(max = DbColumn.VERSION_LENGTH, min = 1, message = "Version length should be between 1 - " + DbColumn.VERSION_LENGTH)
   @Column(length = DbColumn.VERSION_LENGTH)
   protected String version;
 
   @CreatedDate
   @PastOrPresent(message = "Create Time should be past or present")
-  protected Instant createTime;
+  @JsonFormat(pattern = Contract.ZONED_DATE_TIME_JSON_PATTERN)
+  @Column(updatable = false)
+  protected ZonedDateTime createTime;
 
   @CreatedBy
-  @Column(length = DbColumn.NAME_LENGTH)
+  @Column(length = DbColumn.NAME_LENGTH, updatable = false)
   protected String creator;
 
   @LastModifiedDate
   @PastOrPresent(message = "Create Time should be past or present")
-  protected Instant updateTime;
+  @JsonFormat(pattern = Contract.ZONED_DATE_TIME_JSON_PATTERN)
+  protected ZonedDateTime updateTime;
 
   @LastModifiedBy
   @Column(length = DbColumn.NAME_LENGTH)
@@ -46,11 +54,17 @@ public abstract class BaseEntity implements Serializable {
 
   protected boolean deleteFlag;
 
+  @JsonFormat(pattern = Contract.ZONED_DATE_TIME_JSON_PATTERN)
+  protected ZonedDateTime deleteTime;
+
+  @Column(length = DbColumn.NAME_LENGTH)
+  protected String deleteBy;
+
   public BaseEntity() {
-    this("1", Instant.now(), "", Instant.now(), "", false);
+    this("1", null, "", null, "", false);
   }
 
-  public BaseEntity(String version, Instant createTime, String creator, Instant updateTime, String updater, boolean deleteFlag) {
+  public BaseEntity(String version, ZonedDateTime createTime, String creator, ZonedDateTime updateTime, String updater, boolean deleteFlag) {
     this.version = version;
     this.createTime = createTime;
     this.creator = creator;
@@ -67,11 +81,11 @@ public abstract class BaseEntity implements Serializable {
     this.version = version;
   }
 
-  public Instant getCreateTime() {
+  public ZonedDateTime getCreateTime() {
     return createTime;
   }
 
-  public void setCreateTime(Instant createTime) {
+  public void setCreateTime(ZonedDateTime createTime) {
     this.createTime = createTime;
   }
 
@@ -83,11 +97,11 @@ public abstract class BaseEntity implements Serializable {
     this.creator = creator;
   }
 
-  public Instant getUpdateTime() {
+  public ZonedDateTime getUpdateTime() {
     return updateTime;
   }
 
-  public void setUpdateTime(Instant updateTime) {
+  public void setUpdateTime(ZonedDateTime updateTime) {
     this.updateTime = updateTime;
   }
 
@@ -106,4 +120,50 @@ public abstract class BaseEntity implements Serializable {
   public void setDeleteFlag(boolean deleteFlag) {
     this.deleteFlag = deleteFlag;
   }
+
+  public ZonedDateTime getDeleteTime() {
+    return deleteTime;
+  }
+
+  public void setDeleteTime(ZonedDateTime deleteTime) {
+    this.deleteTime = deleteTime;
+  }
+
+  public String getDeleteBy() {
+    return deleteBy;
+  }
+
+  public void setDeleteBy(String deleteBy) {
+    this.deleteBy = deleteBy;
+  }
+//
+//  public <E extends BaseEntity> E creator(String creator) {
+//    this.creator = creator;
+//    return (E) this;
+//  }
+//
+//  public <E extends BaseEntity> E createTime(ZonedDateTime createTime) {
+//    this.createTime = createTime;
+//    return (E) this;
+//  }
+//
+//  public <E extends BaseEntity> E updater(String updater) {
+//    this.updater = updater;
+//    return (E) this;
+//  }
+//
+//  public <E extends BaseEntity> E updateTime(ZonedDateTime updateTime) {
+//    this.updateTime = updateTime;
+//    return (E) this;
+//  }
+//
+//  public <E extends BaseEntity> E deleteBy(String deleteBy) {
+//    this.deleteBy = deleteBy;
+//    return (E) this;
+//  }
+//
+//  public <E extends BaseEntity> E deleteTime(ZonedDateTime deleteTime) {
+//    this.deleteTime = deleteTime;
+//    return (E) this;
+//  }
 }

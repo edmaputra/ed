@@ -3,7 +3,6 @@ package io.github.edmaputra.ed.edbase.model;
 
 import io.github.edmaputra.ed.edbase.annotation.Filterable;
 import io.github.edmaputra.ed.edbase.constant.DbColumn;
-import io.github.edmaputra.ed.edbase.validator.Name;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -24,7 +23,9 @@ import java.time.LocalDate;
 @MappedSuperclass
 public abstract class BasePerson<ID extends Serializable> extends BaseIdEntity<ID> {
 
-  @Name
+
+  @NotBlank
+  @Size(max = DbColumn.NAME_LENGTH, min = 2, message = "Length should be between 2 - " + DbColumn.NAME_LENGTH)
   @Column(length = DbColumn.NAME_LENGTH, nullable = false)
   @Filterable
   protected String firstName;
@@ -33,7 +34,9 @@ public abstract class BasePerson<ID extends Serializable> extends BaseIdEntity<I
   @Filterable
   protected String middleName;
 
-  @Name
+
+  @NotBlank
+  @Size(max = DbColumn.NAME_LENGTH, min = 2, message = "Length should be between 2 - " + DbColumn.NAME_LENGTH)
   @Column(length = DbColumn.NAME_LENGTH, nullable = false)
   @Filterable
   protected String lastName;
@@ -58,7 +61,7 @@ public abstract class BasePerson<ID extends Serializable> extends BaseIdEntity<I
   @Column(nullable = false)
   protected LocalDate birthDate;
 
-  @NotBlank(message = "Should not Blank")
+  @NotBlank()
   @Size(max = DbColumn.PHONE_NUMBER_LENGTH, min = 1, message = "Length should be 1 - " + DbColumn.PHONE_NUMBER_LENGTH)
   @Column(length = DbColumn.PHONE_NUMBER_LENGTH, nullable = false)
   @Filterable

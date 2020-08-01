@@ -8,9 +8,9 @@ package io.github.edmaputra.ed.edbase.model;
  */
 public enum MaritalStatus {
 
-    SINGLE,
-    MARRIED,
-    WIDOWER,
-    DIVORCEE
+  SINGLE,
+  MARRIED,
+  WIDOWER,
+  DIVORCEE
 
 }

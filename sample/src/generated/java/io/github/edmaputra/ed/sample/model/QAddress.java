@@ -28,13 +28,19 @@ public class QAddress extends EntityPathBase<Address> {
     public final StringPath country = _super.country;
 
     //inherited
-    public final DateTimePath<java.time.Instant> createTime = _super.createTime;
+    public final DateTimePath<java.time.ZonedDateTime> createTime = _super.createTime;
 
     //inherited
     public final StringPath creator = _super.creator;
 
     //inherited
+    public final StringPath deleteBy = _super.deleteBy;
+
+    //inherited
     public final BooleanPath deleteFlag = _super.deleteFlag;
+
+    //inherited
+    public final DateTimePath<java.time.ZonedDateTime> deleteTime = _super.deleteTime;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -48,7 +54,7 @@ public class QAddress extends EntityPathBase<Address> {
     public final StringPath updater = _super.updater;
 
     //inherited
-    public final DateTimePath<java.time.Instant> updateTime = _super.updateTime;
+    public final DateTimePath<java.time.ZonedDateTime> updateTime = _super.updateTime;
 
     //inherited
     public final StringPath version = _super.version;

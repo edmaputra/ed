@@ -8,10 +8,14 @@ import io.github.edmaputra.ed.edbase.predicate.BasePredicate;
 import io.github.edmaputra.ed.edbase.repository.BaseRepository;
 import io.github.edmaputra.ed.edbase.service.BaseService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 
 /**
  * {@inheritDoc}
@@ -20,9 +24,11 @@ public class BaseServiceImpl<T extends BaseIdEntity<ID>, ID extends Serializable
     implements BaseService<T, ID> {
 
   private static final String ENTITY_NULL_MESSAGES = "Entity that want to delete is Null";
-  private static final String IGNORED_PROPERTIES = "creator, createTime";
+  private static final String[] IGNORED_PROPERTIES = new String[]{"creator", "createTime"};
   private final BaseRepository<T, ID> repository;
   private final BasePredicate<T> predicate;
+
+  private AuditorAware<String> auditorAware;
 
   public BaseServiceImpl(BaseRepository<T, ID> repository, BasePredicate<T> predicate) {
     this.repository = repository;
@@ -73,7 +79,7 @@ public class BaseServiceImpl<T extends BaseIdEntity<ID>, ID extends Serializable
   @Override
   public T add(T t) throws CrudOperationException {
     validate(t);
-    return (T) repository.save(t);
+    return repository.save(t);
   }
 
   /**
@@ -84,8 +90,7 @@ public class BaseServiceImpl<T extends BaseIdEntity<ID>, ID extends Serializable
     validate(t);
     T entity = getOne(t.getId());
     BeanUtils.copyProperties(t, entity, IGNORED_PROPERTIES);
-    repository.save(entity);
-    return entity;
+    return repository.save(entity);
   }
 
   /**
@@ -96,8 +101,9 @@ public class BaseServiceImpl<T extends BaseIdEntity<ID>, ID extends Serializable
     validate(t);
     T entity = getOne(t.getId());
     entity.setDeleteFlag(true);
-    entity = (T) repository.save(entity);
-    return entity;
+    entity.setDeleteBy(auditor());
+    entity.setDeleteTime(ZonedDateTime.now());
+    return repository.save(entity);
   }
 
   @Override
@@ -112,5 +118,15 @@ public class BaseServiceImpl<T extends BaseIdEntity<ID>, ID extends Serializable
     if (t == null) {
       throw new CrudOperationException(ENTITY_NULL_MESSAGES);
     }
+  }
+
+  private String auditor() {
+    return auditorAware.getCurrentAuditor().orElse("anonymous");
+  }
+
+  @Qualifier("edAuditorAware")
+  @Autowired
+  public void setAuditorAware(AuditorAware<String> auditorAware) {
+    this.auditorAware = auditorAware;
   }
 }

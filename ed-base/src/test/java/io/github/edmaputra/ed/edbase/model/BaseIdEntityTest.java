@@ -46,9 +46,6 @@ class BaseIdEntityTest {
     assertThat(impl.getCreator()).isEqualTo("");
     assertThat(impl.getUpdater()).isEqualTo("");
     assertThat(impl.isDeleteFlag()).isEqualTo(false);
-
-    assertThat(impl.getCreateTime()).isNotNull();
-    assertThat(impl.getUpdateTime()).isNotNull();
   }
 
   private void assertDefaultValue(BaseIdEntity<UUID> entity) {
@@ -56,9 +53,6 @@ class BaseIdEntityTest {
     assertThat(entity.getCreator()).isEqualTo(DEFAULT_CREATOR);
     assertThat(entity.getUpdater()).isEqualTo(DEFAULT_UPDATER);
     assertThat(entity.isDeleteFlag()).isEqualTo(DEFAULT_DELETE_FLAG);
-
-    assertThat(entity.getCreateTime()).isNotNull();
-    assertThat(entity.getUpdateTime()).isNotNull();
   }
 
 

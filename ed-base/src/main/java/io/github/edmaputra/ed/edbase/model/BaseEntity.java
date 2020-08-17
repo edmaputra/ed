@@ -60,6 +60,8 @@ public abstract class BaseEntity implements Serializable {
   @Column(length = DbColumn.NAME_LENGTH)
   protected String deleteBy;
 
+  protected String note;
+
   public BaseEntity() {
     this("1", null, "", null, "", false);
   }
@@ -136,34 +138,12 @@ public abstract class BaseEntity implements Serializable {
   public void setDeleteBy(String deleteBy) {
     this.deleteBy = deleteBy;
   }
-//
-//  public <E extends BaseEntity> E creator(String creator) {
-//    this.creator = creator;
-//    return (E) this;
-//  }
-//
-//  public <E extends BaseEntity> E createTime(ZonedDateTime createTime) {
-//    this.createTime = createTime;
-//    return (E) this;
-//  }
-//
-//  public <E extends BaseEntity> E updater(String updater) {
-//    this.updater = updater;
-//    return (E) this;
-//  }
-//
-//  public <E extends BaseEntity> E updateTime(ZonedDateTime updateTime) {
-//    this.updateTime = updateTime;
-//    return (E) this;
-//  }
-//
-//  public <E extends BaseEntity> E deleteBy(String deleteBy) {
-//    this.deleteBy = deleteBy;
-//    return (E) this;
-//  }
-//
-//  public <E extends BaseEntity> E deleteTime(ZonedDateTime deleteTime) {
-//    this.deleteTime = deleteTime;
-//    return (E) this;
-//  }
+
+  public String getNote() {
+    return note;
+  }
+
+  public void setNote(String note) {
+    this.note = note;
+  }
 }

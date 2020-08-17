@@ -39,6 +39,9 @@ public class QBaseIdEntity extends EntityPathBase<BaseIdEntity<? extends java.io
     public final SimplePath<java.io.Serializable> id = createSimple("id", java.io.Serializable.class);
 
     //inherited
+    public final StringPath note = _super.note;
+
+    //inherited
     public final StringPath updater = _super.updater;
 
     //inherited

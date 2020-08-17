@@ -55,6 +55,9 @@ public class QBasePerson extends EntityPathBase<BasePerson<? extends java.io.Ser
 
     public final StringPath middleName = createString("middleName");
 
+    //inherited
+    public final StringPath note = _super.note;
+
     public final StringPath phoneNumber = createString("phoneNumber");
 
     //inherited

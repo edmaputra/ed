@@ -42,6 +42,9 @@ public class QBaseIdAndNameEntity extends EntityPathBase<BaseIdAndNameEntity<? e
     public final StringPath name = createString("name");
 
     //inherited
+    public final StringPath note = _super.note;
+
+    //inherited
     public final StringPath updater = _super.updater;
 
     //inherited

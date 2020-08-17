@@ -7,19 +7,24 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QBaseItem is a Querydsl query type for BaseItem
+ * QBaseSubject is a Querydsl query type for BaseSubject
  */
 @Generated("com.querydsl.codegen.SupertypeSerializer")
-public class QBaseItem extends EntityPathBase<BaseItem<? extends java.io.Serializable, ? extends BaseItemDetail<?>>> {
+public class QBaseSubject extends EntityPathBase<BaseSubject<? extends java.io.Serializable, ? extends io.github.edmaputra.ed.edbase.model.BaseAddress>> {
 
-    private static final long serialVersionUID = -944425749L;
+    private static final long serialVersionUID = 1254239316L;
 
-    public static final QBaseItem baseItem = new QBaseItem("baseItem");
+    private static final PathInits INITS = PathInits.DIRECT2;
+
+    public static final QBaseSubject baseSubject = new QBaseSubject("baseSubject");
 
     public final io.github.edmaputra.ed.edbase.model.QBaseIdAndNameEntity _super = new io.github.edmaputra.ed.edbase.model.QBaseIdAndNameEntity(this);
+
+    public final io.github.edmaputra.ed.edbase.model.QBaseAddress address;
 
     //inherited
     public final DateTimePath<java.time.ZonedDateTime> createTime = _super.createTime;
@@ -36,6 +41,8 @@ public class QBaseItem extends EntityPathBase<BaseItem<? extends java.io.Seriali
     //inherited
     public final DateTimePath<java.time.ZonedDateTime> deleteTime = _super.deleteTime;
 
+    public final StringPath email = createString("email");
+
     //inherited
     public final SimplePath<java.io.Serializable> id = _super.id;
 
@@ -44,6 +51,8 @@ public class QBaseItem extends EntityPathBase<BaseItem<? extends java.io.Seriali
 
     //inherited
     public final StringPath note = _super.note;
+
+    public final StringPath phone = createString("phone");
 
     //inherited
     public final StringPath updater = _super.updater;
@@ -55,18 +64,27 @@ public class QBaseItem extends EntityPathBase<BaseItem<? extends java.io.Seriali
     public final StringPath version = _super.version;
 
     @SuppressWarnings({"all", "rawtypes", "unchecked"})
-    public QBaseItem(String variable) {
-        super((Class) BaseItem.class, forVariable(variable));
+    public QBaseSubject(String variable) {
+        this((Class) BaseSubject.class, forVariable(variable), INITS);
     }
 
     @SuppressWarnings({"all", "rawtypes", "unchecked"})
-    public QBaseItem(Path<? extends BaseItem> path) {
-        super((Class) path.getType(), path.getMetadata());
+    public QBaseSubject(Path<? extends BaseSubject> path) {
+        this((Class) path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+    }
+
+    public QBaseSubject(PathMetadata metadata) {
+        this(metadata, PathInits.getFor(metadata, INITS));
     }
 
     @SuppressWarnings({"all", "rawtypes", "unchecked"})
-    public QBaseItem(PathMetadata metadata) {
-        super((Class) BaseItem.class, metadata);
+    public QBaseSubject(PathMetadata metadata, PathInits inits) {
+        this((Class) BaseSubject.class, metadata, inits);
+    }
+
+    public QBaseSubject(Class<? extends BaseSubject<? extends java.io.Serializable, ? extends io.github.edmaputra.ed.edbase.model.BaseAddress>> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.address = inits.isInitialized("address") ? new io.github.edmaputra.ed.edbase.model.QBaseAddress(forProperty("address")) : null;
     }
 
 }

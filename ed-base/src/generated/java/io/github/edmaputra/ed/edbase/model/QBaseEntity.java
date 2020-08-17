@@ -29,6 +29,8 @@ public class QBaseEntity extends EntityPathBase<BaseEntity> {
 
     public final DateTimePath<java.time.ZonedDateTime> deleteTime = createDateTime("deleteTime", java.time.ZonedDateTime.class);
 
+    public final StringPath note = createString("note");
+
     public final StringPath updater = createString("updater");
 
     public final DateTimePath<java.time.ZonedDateTime> updateTime = createDateTime("updateTime", java.time.ZonedDateTime.class);

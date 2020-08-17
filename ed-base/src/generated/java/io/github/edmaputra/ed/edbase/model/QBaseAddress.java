@@ -43,6 +43,9 @@ public class QBaseAddress extends EntityPathBase<BaseAddress<? extends java.io.S
     //inherited
     public final SimplePath<java.io.Serializable> id = _super.id;
 
+    //inherited
+    public final StringPath note = _super.note;
+
     public final StringPath province = createString("province");
 
     public final StringPath street = createString("street");

@@ -40,9 +40,6 @@ public abstract class BaseAddress<ID extends Serializable> extends BaseIdEntity<
   @Column(length = DbColumn.COUNTRY_LENGTH)
   protected String country;
 
-//  @ManyToMany(mappedBy = "addresses")
-//  private Set<P> persons = new HashSet<>();
-
   public BaseAddress() {
     super();
   }
@@ -100,7 +97,4 @@ public abstract class BaseAddress<ID extends Serializable> extends BaseIdEntity<
     this.country = country;
   }
 
-//  public Set<P> getPersons() {
-//    return persons;
-//  }
 }

@@ -1,4 +1,5 @@
 rootProject.name = 'ed'
 
 include 'ed-base'
+include 'ed-pos'
 include 'sample'

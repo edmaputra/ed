@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
   implementation project(':ed-base')
+  implementation project(':ed-pos')
 
   runtimeOnly 'com.h2database:h2'
 

@@ -22,7 +22,7 @@ public abstract class BaseItemDetail<ID extends Serializable> extends BaseIdEnti
 
   private String variant;
 
-  private String sku;
+  private String stockKeepingUnit;
 
   private String barcode;
 
@@ -74,12 +74,12 @@ public abstract class BaseItemDetail<ID extends Serializable> extends BaseIdEnti
     this.variant = variant;
   }
 
-  public String getSku() {
-    return sku;
+  public String getStockKeepingUnit() {
+    return stockKeepingUnit;
   }
 
-  public void setSku(String sku) {
-    this.sku = sku;
+  public void setStockKeepingUnit(String stockKeepingUnit) {
+    this.stockKeepingUnit = stockKeepingUnit;
   }
 
   public String getBarcode() {

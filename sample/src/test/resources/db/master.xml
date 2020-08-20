@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <property name="floatType" value="float4" dbms="postgresql, h2"/>
+  <property name="floatType" value="float" dbms="mysql, oracle, mssql, mariadb"/>
+  <property name="clobType" value="clob" dbms="h2"/>
+  <property name="clobType" value="clob" dbms="mysql, oracle, mssql, mariadb, postgresql"/>
+  <property name="uuidType" value="uuid" dbms="postgresql, h2, oracle"/>
+  <property name="uuidType" value="uniqueidentifier" dbms="mssql"/>
+  <property name="varcharType" value="varchar2" dbms="oracle"/>
+  <property name="varcharType" value="varchar"/>
+  <property name="nowFunction" value="now()" dbms="h2"/>
+  <property name="nowFunction" value="sysdate" dbms="oracle"/>
+  <property name="uuidFunction" value="uid.uuid_generate_v4()" dbms="postgresql"/>
+  <property name="uuidFunction" value="NEWID()" dbms="mssql"/>
+  <property name="uuidFunction" value="sys_guid()" dbms="oracle"/>
+  <property name="uuidFunction" value="RANDOM_UUID()" dbms="h2"/>
+  <property name="CHAR" value="CHAR" dbms="oracle"/>
+  <property name="CHAR" value=""/>
+  <property name="MAX_SIZE" value="4000"/>
+  <property name="boolType" value="boolean"/>
+  <property name="dateType" value="datetime"/>
+
+  <!-- add-changelogs here -->
+  <include file="db/changelog/01_initial_schema.xml" relativeToChangelogFile="false"/>
+
+</databaseChangeLog>
+

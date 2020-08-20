@@ -50,11 +50,11 @@ public class QBaseItemDetail extends EntityPathBase<BaseItemDetail<? extends jav
 
     public final NumberPath<java.math.BigDecimal> sellPrice = createNumber("sellPrice", java.math.BigDecimal.class);
 
-    public final StringPath sku = createString("sku");
-
     public final NumberPath<Integer> stock = createNumber("stock", Integer.class);
 
     public final NumberPath<Integer> stockAlert = createNumber("stockAlert", Integer.class);
+
+    public final StringPath stockKeepingUnit = createString("stockKeepingUnit");
 
     //inherited
     public final StringPath updater = _super.updater;

@@ -81,7 +81,6 @@ public class BaseController<T extends BaseIdEntity<ID>, ID extends Serializable>
    */
   @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<T> update(@Valid @RequestBody T t) throws CrudOperationException, DataNotFoundException {
-
     T result = service.update(t);
     return ResponseEntity.ok().body(result);
   }

@@ -23,10 +23,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -104,13 +104,13 @@ class EmployeeControllerTest {
 
   @Test
   void givenEmployeeId_whenFind_thenReturnExpectedObjectAndResponse() throws Exception {
-    doReturn(e3).when(employeeService).getOne(anyLong());
+    doReturn(e3).when(employeeService).getOne(any(UUID.class));
 
     MvcResult mvcResult = mockMvc.perform(get("/employees/3"))
         .andExpect(status().isOk())
         .andReturn();
 
-    ArgumentCaptor<Long> acId = ArgumentCaptor.forClass(Long.class);
+    ArgumentCaptor<UUID> acId = ArgumentCaptor.forClass(UUID.class);
     verify(employeeService, times(1)).getOne(acId.capture());
     assertThat(acId.getValue()).isEqualTo(3);
 
@@ -121,13 +121,13 @@ class EmployeeControllerTest {
   @Test
   void givenEmployeeId_whenFind_thenThrowDataNotFoundException() throws Exception {
     DataNotFoundException ex = new DataNotFoundException("Data Not Found");
-    doThrow(ex).when(employeeService).getOne(anyLong());
+    doThrow(ex).when(employeeService).getOne(any(UUID.class));
 
     MvcResult mvcResult = mockMvc.perform(get("/employees/3"))
         .andExpect(status().isNotFound())
         .andReturn();
 
-    verify(employeeService, times(1)).getOne(anyLong());
+    verify(employeeService, times(1)).getOne(any(UUID.class));
     String expectedResponse = objectMapper.writeValueAsString(ResponseUtil.createExceptionResponse(ex, HttpStatus.NOT_FOUND).getBody());
     assertThat(mvcResult.getResponse().getContentAsString()).isEqualTo(expectedResponse);
   }
@@ -169,7 +169,7 @@ class EmployeeControllerTest {
 
   @Test
   void givenEmployee_whenEdit_thenReturn200() throws Exception {
-    e0.setId(1L);
+    e0.setId(UUID.randomUUID());
     doReturn(e1).when(employeeService).update(any(Employee.class));
 
     MvcResult mvcResult = mockMvc.perform(put("/employees")
@@ -188,7 +188,7 @@ class EmployeeControllerTest {
 
   @Test
   void givenEmployee_whenDelete_thenReturn200() throws Exception {
-    e0.setId(1L);
+    e0.setId(UUID.randomUUID());
     doReturn(e2).when(employeeService).delete(any(Employee.class));
 
     MvcResult mvcResult = mockMvc.perform(delete("/employees")

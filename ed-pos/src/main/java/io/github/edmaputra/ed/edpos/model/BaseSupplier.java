@@ -7,5 +7,5 @@ import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 @MappedSuperclass
-public abstract class BaseSupplier<ID extends Serializable, A extends BaseAddress> extends BaseSubject<ID, A> {
+public abstract class BaseSupplier<ID extends Serializable> extends BaseSubject<ID> {
 }

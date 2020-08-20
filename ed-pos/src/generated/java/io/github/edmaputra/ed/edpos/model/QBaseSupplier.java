@@ -7,101 +7,87 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
  * QBaseSupplier is a Querydsl query type for BaseSupplier
  */
 @Generated("com.querydsl.codegen.SupertypeSerializer")
-public class QBaseSupplier extends EntityPathBase<BaseSupplier<? extends java.io.Serializable, ? extends io.github.edmaputra.ed.edbase.model.BaseAddress>> {
+public class QBaseSupplier extends EntityPathBase<BaseSupplier<? extends java.io.Serializable>> {
 
     private static final long serialVersionUID = 633276324L;
 
-    private static final PathInits INITS = PathInits.DIRECT2;
-
     public static final QBaseSupplier baseSupplier = new QBaseSupplier("baseSupplier");
 
-    public final QBaseSubject _super;
-
-    // inherited
-    public final io.github.edmaputra.ed.edbase.model.QBaseAddress address;
+    public final QBaseSubject _super = new QBaseSubject(this);
 
     //inherited
-    public final DateTimePath<java.time.ZonedDateTime> createTime;
+    public final StringPath city = _super.city;
 
     //inherited
-    public final StringPath creator;
+    public final StringPath country = _super.country;
 
     //inherited
-    public final StringPath deleteBy;
+    public final DateTimePath<java.time.ZonedDateTime> createTime = _super.createTime;
 
     //inherited
-    public final BooleanPath deleteFlag;
+    public final StringPath creator = _super.creator;
 
     //inherited
-    public final DateTimePath<java.time.ZonedDateTime> deleteTime;
+    public final StringPath deleteBy = _super.deleteBy;
 
     //inherited
-    public final StringPath email;
+    public final BooleanPath deleteFlag = _super.deleteFlag;
 
     //inherited
-    public final SimplePath<java.io.Serializable> id;
+    public final DateTimePath<java.time.ZonedDateTime> deleteTime = _super.deleteTime;
 
     //inherited
-    public final StringPath name;
+    public final StringPath email = _super.email;
 
     //inherited
-    public final StringPath note;
+    public final SimplePath<java.io.Serializable> id = _super.id;
 
     //inherited
-    public final StringPath phone;
+    public final StringPath name = _super.name;
 
     //inherited
-    public final StringPath updater;
+    public final StringPath note = _super.note;
 
     //inherited
-    public final DateTimePath<java.time.ZonedDateTime> updateTime;
+    public final StringPath phone = _super.phone;
 
     //inherited
-    public final StringPath version;
+    public final StringPath province = _super.province;
+
+    //inherited
+    public final StringPath street = _super.street;
+
+    //inherited
+    public final StringPath updater = _super.updater;
+
+    //inherited
+    public final DateTimePath<java.time.ZonedDateTime> updateTime = _super.updateTime;
+
+    //inherited
+    public final StringPath version = _super.version;
+
+    //inherited
+    public final StringPath zipCode = _super.zipCode;
 
     @SuppressWarnings({"all", "rawtypes", "unchecked"})
     public QBaseSupplier(String variable) {
-        this((Class) BaseSupplier.class, forVariable(variable), INITS);
+        super((Class) BaseSupplier.class, forVariable(variable));
     }
 
     @SuppressWarnings({"all", "rawtypes", "unchecked"})
     public QBaseSupplier(Path<? extends BaseSupplier> path) {
-        this((Class) path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
-    }
-
-    public QBaseSupplier(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
+        super((Class) path.getType(), path.getMetadata());
     }
 
     @SuppressWarnings({"all", "rawtypes", "unchecked"})
-    public QBaseSupplier(PathMetadata metadata, PathInits inits) {
-        this((Class) BaseSupplier.class, metadata, inits);
-    }
-
-    public QBaseSupplier(Class<? extends BaseSupplier<? extends java.io.Serializable, ? extends io.github.edmaputra.ed.edbase.model.BaseAddress>> type, PathMetadata metadata, PathInits inits) {
-        super(type, metadata, inits);
-        this._super = new QBaseSubject(type, metadata, inits);
-        this.address = _super.address;
-        this.createTime = _super.createTime;
-        this.creator = _super.creator;
-        this.deleteBy = _super.deleteBy;
-        this.deleteFlag = _super.deleteFlag;
-        this.deleteTime = _super.deleteTime;
-        this.email = _super.email;
-        this.id = _super.id;
-        this.name = _super.name;
-        this.note = _super.note;
-        this.phone = _super.phone;
-        this.updater = _super.updater;
-        this.updateTime = _super.updateTime;
-        this.version = _super.version;
+    public QBaseSupplier(PathMetadata metadata) {
+        super((Class) BaseSupplier.class, metadata);
     }
 
 }

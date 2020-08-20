@@ -7,9 +7,10 @@ import io.github.edmaputra.ed.edbase.model.MaritalStatus;
 
 import javax.persistence.Entity;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
-public class Employee extends BasePerson<Long> {
+public class Employee extends BasePerson<UUID> {
 
   public Employee() {
     super();

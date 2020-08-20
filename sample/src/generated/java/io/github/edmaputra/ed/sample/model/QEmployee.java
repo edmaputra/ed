@@ -1,4 +1,4 @@
-package io.github.edmaputra.ed.edpos.model;
+package io.github.edmaputra.ed.sample.model;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -10,16 +10,18 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QBaseEmployee is a Querydsl query type for BaseEmployee
+ * QEmployee is a Querydsl query type for Employee
  */
-@Generated("com.querydsl.codegen.SupertypeSerializer")
-public class QBaseEmployee extends EntityPathBase<BaseEmployee<? extends java.io.Serializable>> {
+@Generated("com.querydsl.codegen.EntitySerializer")
+public class QEmployee extends EntityPathBase<Employee> {
 
-    private static final long serialVersionUID = -804916090L;
+    private static final long serialVersionUID = 431793518L;
 
-    public static final QBaseEmployee baseEmployee = new QBaseEmployee("baseEmployee");
+    public static final QEmployee employee = new QEmployee("employee");
 
     public final io.github.edmaputra.ed.edbase.model.QBasePerson _super = new io.github.edmaputra.ed.edbase.model.QBasePerson(this);
+
+    public final NumberPath<Integer> age = createNumber("age", Integer.class);
 
     //inherited
     public final DatePath<java.time.LocalDate> birthDate = _super.birthDate;
@@ -51,8 +53,7 @@ public class QBaseEmployee extends EntityPathBase<BaseEmployee<? extends java.io
     //inherited
     public final EnumPath<io.github.edmaputra.ed.edbase.model.Gender> gender = _super.gender;
 
-    //inherited
-    public final SimplePath<java.io.Serializable> id = _super.id;
+    public final ComparablePath<java.util.UUID> id = createComparable("id", java.util.UUID.class);
 
     //inherited
     public final StringPath lastName = _super.lastName;
@@ -78,19 +79,16 @@ public class QBaseEmployee extends EntityPathBase<BaseEmployee<? extends java.io
     //inherited
     public final StringPath version = _super.version;
 
-    @SuppressWarnings({"all", "rawtypes", "unchecked"})
-    public QBaseEmployee(String variable) {
-        super((Class) BaseEmployee.class, forVariable(variable));
+    public QEmployee(String variable) {
+        super(Employee.class, forVariable(variable));
     }
 
-    @SuppressWarnings({"all", "rawtypes", "unchecked"})
-    public QBaseEmployee(Path<? extends BaseEmployee> path) {
-        super((Class) path.getType(), path.getMetadata());
+    public QEmployee(Path<? extends Employee> path) {
+        super(path.getType(), path.getMetadata());
     }
 
-    @SuppressWarnings({"all", "rawtypes", "unchecked"})
-    public QBaseEmployee(PathMetadata metadata) {
-        super((Class) BaseEmployee.class, metadata);
+    public QEmployee(PathMetadata metadata) {
+        super(Employee.class, metadata);
     }
 
 }

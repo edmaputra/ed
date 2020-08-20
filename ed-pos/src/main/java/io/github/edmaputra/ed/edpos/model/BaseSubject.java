@@ -1,26 +1,25 @@
 package io.github.edmaputra.ed.edpos.model;
 
 import io.github.edmaputra.ed.edbase.model.BaseAddress;
-import io.github.edmaputra.ed.edbase.model.BaseIdAndNameEntity;
 
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 @MappedSuperclass
-public abstract class BaseSubject<ID extends Serializable, A extends BaseAddress> extends BaseIdAndNameEntity<ID> {
+public abstract class BaseSubject<ID extends Serializable> extends BaseAddress<ID> {
 
-  private A address;
+  private String name;
 
   private String phone;
 
   private String email;
 
-  public A getAddress() {
-    return address;
+  public String getName() {
+    return name;
   }
 
-  public void setAddress(A address) {
-    this.address = address;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public String getPhone() {

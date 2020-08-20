@@ -26,6 +26,7 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -107,9 +108,9 @@ class EmployeeServiceImplTest {
 
   @Test
   void givenId_whenGetOne_thenReturnExpectedObject() throws DataNotFoundException, CrudOperationException {
-    doReturn(Optional.of(e0)).when(repository).findById(anyLong());
+    doReturn(Optional.of(e0)).when(repository).findById(any(UUID.class));
 
-    Employee employee = service.getOne(0L);
+    Employee employee = service.getOne(UUID.randomUUID());
 
     assertThat(employee.getFirstName()).isEqualTo("Bangun");
     assertThat(employee.getMiddleName()).isEqualTo("Edma");
@@ -128,9 +129,9 @@ class EmployeeServiceImplTest {
 
   @Test
   void givenId_whenGetOne_thenThrowException() {
-    doReturn(Optional.empty()).when(repository).findById(anyLong());
+    doReturn(Optional.empty()).when(repository).findById(any(UUID.class));
 
-    assertThrows(DataNotFoundException.class, () -> service.getOne(1L));
+    assertThrows(DataNotFoundException.class, () -> service.getOne(UUID.randomUUID()));
   }
 
   @Test
@@ -156,8 +157,8 @@ class EmployeeServiceImplTest {
 
   @Test
   void givenE0Employee_whenUpdate_thenReturnExpectedObject() throws DataNotFoundException, CrudOperationException {
-    e0.setId(2L);
-    doReturn(Optional.of(e0)).when(repository).findById(anyLong());
+    e0.setId(UUID.randomUUID());
+    doReturn(Optional.of(e0)).when(repository).findById(any(UUID.class));
     doReturn(e0).when(repository).save(any(Employee.class));
 
     Employee employee = service.update(e0);
@@ -179,15 +180,15 @@ class EmployeeServiceImplTest {
 
   @Test
   void givenId_whenUpdate_thenThrowException() {
-    e0.setId(2L);
-    doReturn(Optional.empty()).when(repository).findById(anyLong());
+    e0.setId(UUID.randomUUID());
+    doReturn(Optional.empty()).when(repository).findById(any(UUID.class));
     assertThrows(DataNotFoundException.class, () -> service.update(e0));
   }
 
   @Test
   void givenId_whenDelete_thenReturnExpectedObject() throws DataNotFoundException, CrudOperationException {
-    e0.setId(2L);
-    doReturn(Optional.of(e0)).when(repository).findById(anyLong());
+    e0.setId(UUID.randomUUID());
+    doReturn(Optional.of(e0)).when(repository).findById(any(UUID.class));
     doReturn(e0).when(repository).save(any(Employee.class));
     doReturn(Optional.of("anonymous")).when(auditorAware).getCurrentAuditor();
 
@@ -199,8 +200,8 @@ class EmployeeServiceImplTest {
 
   @Test
   void givenId_whenHardDelete_thenReturnDeletedObject() throws CrudOperationException, DataNotFoundException {
-    e0.setId(1L);
-    doReturn(Optional.of(e0)).when(repository).findById(anyLong());
+    e0.setId(UUID.randomUUID());
+    doReturn(Optional.of(e0)).when(repository).findById(any(UUID.class));
 
     Employee employee = service.hardDelete(e0);
 
@@ -214,8 +215,8 @@ class EmployeeServiceImplTest {
 
   @Test
   void givenId_whenDelete_thenThrowException() {
-    e0.setId(2L);
-    doReturn(Optional.empty()).when(repository).findById(anyLong());
+    e0.setId(UUID.randomUUID());
+    doReturn(Optional.empty()).when(repository).findById(any(UUID.class));
     assertThrows(DataNotFoundException.class, () -> service.delete(e0));
   }
 

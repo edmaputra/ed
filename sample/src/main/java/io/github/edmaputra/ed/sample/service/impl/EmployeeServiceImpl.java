@@ -7,8 +7,10 @@ import io.github.edmaputra.ed.sample.repository.EmployeeRepository;
 import io.github.edmaputra.ed.sample.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
-public class EmployeeServiceImpl extends BaseServiceImpl<Employee, Long> implements EmployeeService {
+public class EmployeeServiceImpl extends BaseServiceImpl<Employee, UUID> implements EmployeeService {
 
   public EmployeeServiceImpl(EmployeeRepository repository, EmployeePredicate predicate) {
     super(repository, predicate);

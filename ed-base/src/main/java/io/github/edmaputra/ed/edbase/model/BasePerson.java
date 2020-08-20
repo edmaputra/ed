@@ -9,6 +9,7 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -23,7 +24,6 @@ import java.time.LocalDate;
 @MappedSuperclass
 public abstract class BasePerson<ID extends Serializable> extends BaseIdEntity<ID> {
 
-
   @NotBlank
   @Size(max = DbColumn.NAME_LENGTH, min = 2, message = "Length should be between 2 - " + DbColumn.NAME_LENGTH)
   @Column(length = DbColumn.NAME_LENGTH, nullable = false)
@@ -34,24 +34,23 @@ public abstract class BasePerson<ID extends Serializable> extends BaseIdEntity<I
   @Filterable
   protected String middleName;
 
-
   @NotBlank
   @Size(max = DbColumn.NAME_LENGTH, min = 2, message = "Length should be between 2 - " + DbColumn.NAME_LENGTH)
   @Column(length = DbColumn.NAME_LENGTH, nullable = false)
   @Filterable
   protected String lastName;
 
-  @NotNull(message = "Should not null")
+  @NotNull
   @Column(length = DbColumn.GENDER_LENGTH, nullable = false)
   @Filterable
   protected Gender gender;
 
-  @NotNull(message = "Should not null")
+  @NotNull
   @Column(length = DbColumn.MARITAL_STATUS_LENGTH, nullable = false)
   @Filterable
   protected MaritalStatus maritalStatus;
 
-  @NotBlank(message = "Should not Blank")
+  @NotBlank
   @Size(max = DbColumn.CITY_NAME_LENGTH, min = 1, message = "Length should be 1 - " + DbColumn.CITY_NAME_LENGTH)
   @Column(length = DbColumn.CITY_NAME_LENGTH, nullable = false)
   @Filterable
@@ -61,7 +60,7 @@ public abstract class BasePerson<ID extends Serializable> extends BaseIdEntity<I
   @Column(nullable = false)
   protected LocalDate birthDate;
 
-  @NotBlank()
+  @NotBlank
   @Size(max = DbColumn.PHONE_NUMBER_LENGTH, min = 1, message = "Length should be 1 - " + DbColumn.PHONE_NUMBER_LENGTH)
   @Column(length = DbColumn.PHONE_NUMBER_LENGTH, nullable = false)
   @Filterable

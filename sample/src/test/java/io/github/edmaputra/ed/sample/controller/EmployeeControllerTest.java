@@ -105,14 +105,15 @@ class EmployeeControllerTest {
   @Test
   void givenEmployeeId_whenFind_thenReturnExpectedObjectAndResponse() throws Exception {
     doReturn(e3).when(employeeService).getOne(any(UUID.class));
+    UUID id = UUID.randomUUID();
 
-    MvcResult mvcResult = mockMvc.perform(get("/employees/3"))
+    MvcResult mvcResult = mockMvc.perform(get("/employees/" + id))
         .andExpect(status().isOk())
         .andReturn();
 
     ArgumentCaptor<UUID> acId = ArgumentCaptor.forClass(UUID.class);
     verify(employeeService, times(1)).getOne(acId.capture());
-    assertThat(acId.getValue()).isEqualTo(3);
+    assertThat(acId.getValue()).isEqualTo(id);
 
     String actualResponseBody = mvcResult.getResponse().getContentAsString();
     assertThat(objectMapper.writeValueAsString(e3)).isEqualToIgnoringWhitespace(actualResponseBody);
@@ -123,7 +124,7 @@ class EmployeeControllerTest {
     DataNotFoundException ex = new DataNotFoundException("Data Not Found");
     doThrow(ex).when(employeeService).getOne(any(UUID.class));
 
-    MvcResult mvcResult = mockMvc.perform(get("/employees/3"))
+    MvcResult mvcResult = mockMvc.perform(get("/employees/" + UUID.randomUUID()))
         .andExpect(status().isNotFound())
         .andReturn();
 

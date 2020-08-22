@@ -1,5 +1,7 @@
 package io.github.edmaputra.ed.sample.service.impl;
 
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import io.github.edmaputra.ed.edbase.exception.CrudOperationException;
 import io.github.edmaputra.ed.edbase.exception.DataEmptyException;
 import io.github.edmaputra.ed.edbase.exception.DataNotFoundException;
@@ -32,7 +34,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceImplTest {
@@ -43,7 +47,6 @@ class EmployeeServiceImplTest {
   @Mock
   EmployeePredicate predicate;
 
-  @Mock
   AuditorAware<String> auditorAware;
 
   @InjectMocks
@@ -66,13 +69,16 @@ class EmployeeServiceImplTest {
 
     employeesPage = new PageImpl<>(employees);
 
+    auditorAware = mock(AuditorAware.class);
     service.setAuditorAware(auditorAware);
   }
 
 
   @Test
   void givenPageableUnpaged_whenGet_thenReturnExpectedCollection() throws DataEmptyException, CrudOperationException {
-    doReturn(employeesPage).when(repository).findAll(any(Pageable.class));
+    BooleanExpression booleanExpression = mock(BooleanExpression.class);
+    doReturn(booleanExpression).when(predicate).getPredicate(anyString());
+    doReturn(employeesPage).when(repository).findAll(any(Predicate.class), any(Pageable.class));
 
     Page<Employee> pages = service.get(Pageable.unpaged());
 
@@ -84,21 +90,15 @@ class EmployeeServiceImplTest {
     PageRequest pageRequest = PageRequest.of(0, 3);
     employeesPage = new PageImpl<>(employees, pageRequest, 6);
 
-    doReturn(employeesPage).when(repository).findAll(any(Pageable.class));
+    BooleanExpression booleanExpression = mock(BooleanExpression.class);
+    doReturn(booleanExpression).when(predicate).getPredicate(anyString());
+    doReturn(employeesPage).when(repository).findAll(any(Predicate.class), any(Pageable.class));
 
     Page<Employee> pages = service.get(pageRequest);
 
     assertThat(pages.getSize()).isEqualTo(3);
     assertThat(pages.getTotalPages()).isEqualTo(2);
     assertThat(pages.getTotalElements()).isEqualTo(6);
-  }
-
-  @Test
-  void givenPageable_whenGet_thenThrowException() {
-    Page<Employee> pageEmpty = new PageImpl<>(new ArrayList<>());
-    doReturn(pageEmpty).when(repository).findAll(any(Pageable.class));
-
-    assertThrows(DataEmptyException.class, () -> service.get(Pageable.unpaged()));
   }
 
   @Test

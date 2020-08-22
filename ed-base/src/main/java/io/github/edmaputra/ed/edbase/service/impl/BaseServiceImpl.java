@@ -40,13 +40,6 @@ public class BaseServiceImpl<T extends BaseIdEntity<ID>, ID extends Serializable
    */
   @Override
   public Page<T> get(Pageable pageable) throws DataEmptyException, CrudOperationException {
-//    if (pageable == null) {
-//      throw new CrudOperationException("Pagination is Null");
-//    }
-//    Page<T> tPage = repository.findAll(pageable);
-////    if (tPage.isEmpty()) {
-////      throw new DataEmptyException("Data Empty");
-////    }
     return get(pageable, "");
   }
 

@@ -26,6 +26,7 @@
 
   <!-- add-changelogs here -->
   <include file="db/changelog/01_initial_schema.xml" relativeToChangelogFile="false"/>
+  <include file="db/changelog/02_initial_schema_category.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
 

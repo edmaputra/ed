@@ -7,14 +7,13 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
  * QBaseCategory is a Querydsl query type for BaseCategory
  */
 @Generated("com.querydsl.codegen.SupertypeSerializer")
-public class QBaseCategory extends EntityPathBase<BaseCategory<? extends java.io.Serializable, ? extends BaseItem<?, ?>>> {
+public class QBaseCategory extends EntityPathBase<BaseCategory<? extends java.io.Serializable>> {
 
     private static final long serialVersionUID = -1947874602L;
 
@@ -39,8 +38,6 @@ public class QBaseCategory extends EntityPathBase<BaseCategory<? extends java.io
 
     //inherited
     public final SimplePath<java.io.Serializable> id = _super.id;
-
-    public final SetPath<BaseItem<?, ?>, QBaseItem> items = this.<BaseItem<?, ?>, QBaseItem>createSet("items", BaseItem.class, QBaseItem.class, PathInits.DIRECT2);
 
     //inherited
     public final StringPath name = _super.name;

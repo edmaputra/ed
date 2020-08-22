@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -38,8 +37,6 @@ public class QCategory extends EntityPathBase<Category> {
     public final DateTimePath<java.time.ZonedDateTime> deleteTime = _super.deleteTime;
 
     public final ComparablePath<java.util.UUID> id = createComparable("id", java.util.UUID.class);
-
-    public final SetPath<Item, QItem> items = this.<Item, QItem>createSet("items", Item.class, QItem.class, PathInits.DIRECT2);
 
     //inherited
     public final StringPath name = _super.name;

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="02-1" author="edmaputra">
+
+    <createTable tableName="category">
+      <column name="id" type="${uuidType}" defaultValueComputed="${uuidFunction}">
+        <constraints primaryKey="true" primaryKeyName="pk_category_id" nullable="false"/>
+      </column>
+      <column name="name" type="${varcharType} (120 ${CHAR})">
+        <constraints nullable="false"/>
+      </column>
+      <column name="create_time" type="datetime" defaultValueComputed="${nowFunction}">
+        <constraints nullable="false"/>
+      </column>
+      <column name="creator" type="${varcharType} (120 ${CHAR})"
+              defaultValue="generated_anonymous">
+        <constraints nullable="false"/>
+      </column>
+      <column name="update_time" type="datetime" defaultValueComputed="${nowFunction}">
+        <constraints nullable="false"/>
+      </column>
+      <column name="updater" type="${varcharType} (120 ${CHAR})"
+              defaultValue="generated_anonymous">
+        <constraints nullable="false"/>
+      </column>
+      <column name="delete_flag" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="delete_time" type="datetime"/>
+      <column name="delete_by" type="${varcharType} (300 ${CHAR})"/>
+      <column name="version" type="${varcharType} (10 ${CHAR})"/>
+      <column name="note" type="${varcharType} (255 ${CHAR})"/>
+    </createTable>
+
+  </changeSet>
+
+  <changeSet id="02-2" author="edmaputra">
+    <tagDatabase tag="0.4.0"/>
+  </changeSet>
+
+</databaseChangeLog>

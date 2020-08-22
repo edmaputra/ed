@@ -7,19 +7,24 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
  * QBaseItem is a Querydsl query type for BaseItem
  */
 @Generated("com.querydsl.codegen.SupertypeSerializer")
-public class QBaseItem extends EntityPathBase<BaseItem<? extends java.io.Serializable, ? extends BaseItemDetail<?>>> {
+public class QBaseItem extends EntityPathBase<BaseItem<? extends BaseCategory<?>, ? extends java.io.Serializable>> {
 
     private static final long serialVersionUID = -944425749L;
+
+    private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QBaseItem baseItem = new QBaseItem("baseItem");
 
     public final io.github.edmaputra.ed.edbase.model.QBaseIdAndNameEntity _super = new io.github.edmaputra.ed.edbase.model.QBaseIdAndNameEntity(this);
+
+    public final QBaseCategory category;
 
     //inherited
     public final DateTimePath<java.time.ZonedDateTime> createTime = _super.createTime;
@@ -56,17 +61,26 @@ public class QBaseItem extends EntityPathBase<BaseItem<? extends java.io.Seriali
 
     @SuppressWarnings({"all", "rawtypes", "unchecked"})
     public QBaseItem(String variable) {
-        super((Class) BaseItem.class, forVariable(variable));
+        this((Class) BaseItem.class, forVariable(variable), INITS);
     }
 
     @SuppressWarnings({"all", "rawtypes", "unchecked"})
     public QBaseItem(Path<? extends BaseItem> path) {
-        super((Class) path.getType(), path.getMetadata());
+        this((Class) path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+    }
+
+    public QBaseItem(PathMetadata metadata) {
+        this(metadata, PathInits.getFor(metadata, INITS));
     }
 
     @SuppressWarnings({"all", "rawtypes", "unchecked"})
-    public QBaseItem(PathMetadata metadata) {
-        super((Class) BaseItem.class, metadata);
+    public QBaseItem(PathMetadata metadata, PathInits inits) {
+        this((Class) BaseItem.class, metadata, inits);
+    }
+
+    public QBaseItem(Class<? extends BaseItem<? extends BaseCategory<?>, ? extends java.io.Serializable>> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.category = inits.isInitialized("category") ? new QBaseCategory(forProperty("category")) : null;
     }
 
 }

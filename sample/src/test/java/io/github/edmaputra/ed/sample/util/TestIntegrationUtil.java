@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
 
-import static io.github.edmaputra.ed.sample.util.TestUtil.notNull;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class TestIntegrationUtil<E extends BaseIdEntity<UUID>> {
@@ -37,30 +36,19 @@ public abstract class TestIntegrationUtil<E extends BaseIdEntity<UUID>> {
   private final TestRestTemplate restTemplate;
   private final ObjectMapper objectMapper;
 
-  private Customization[] singleCustomAssert;
-  private Customization[] collectionCustomAssert;
+  private final Customization[] singleCustomAssert;
+  private final Customization[] collectionCustomAssert;
 
-  public TestIntegrationUtil(String baseUrl, TestRestTemplate restTemplate, ObjectMapper objectMapper) {
+  public TestIntegrationUtil(String baseUrl, TestRestTemplate restTemplate, ObjectMapper objectMapper,
+                             Customization[] singleCustomAssert,
+                             Customization[] collectionCustomAssert) {
     this.baseUrl = baseUrl;
     this.restTemplate = restTemplate;
     this.objectMapper = objectMapper;
+    this.singleCustomAssert = singleCustomAssert;
+    this.collectionCustomAssert = collectionCustomAssert;
     Class<?>[] classes = GenericTypeResolver.resolveTypeArguments(getClass(), TestIntegrationUtil.class);
     this.clazz = (Class<E>) (classes != null ? classes[0] : null);
-
-    singleCustomAssert = new Customization[]{
-        new Customization("id", (actualValue, expectedValue) -> notNull(actualValue)),
-        new Customization("createTime", (actualValue, expectedValue) -> notNull(actualValue)),
-        new Customization("creator", (actualValue, expectedValue) -> notNull(actualValue)),
-        new Customization("updateTime", (actualValue, expectedValue) -> notNull(actualValue)),
-        new Customization("updater", (actualValue, expectedValue) -> notNull(actualValue)),
-    };
-
-    collectionCustomAssert = new Customization[]{
-        new Customization("content[*].createTime", (actualValue, expectedValue) -> notNull(actualValue)),
-        new Customization("content[*].creator", (actualValue, expectedValue) -> notNull(actualValue)),
-        new Customization("content[*].updateTime", (actualValue, expectedValue) -> notNull(actualValue)),
-        new Customization("content[*].updater", (actualValue, expectedValue) -> notNull(actualValue)),
-    };
   }
 
   public void assertSingle(String expectedResponse, String actualResponse) throws JSONException {

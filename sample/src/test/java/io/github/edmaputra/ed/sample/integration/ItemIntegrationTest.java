@@ -129,13 +129,13 @@ public class ItemIntegrationTest {
   @Test
   @Order(2)
   public void givenRequestWithFilter_whenGetWithKeyword_thenReturnExpectedList() throws JSONException, IOException {
-    Item item1 = new Item("food");
+    Item item1 = new Item("coca-cola");
     item1.setCategory(category);
-    Item item2 = new Item("FOOD");
+    Item item2 = new Item("chocolate");
     item2.setCategory(category);
-    Item item3 = new Item("drink");
+    Item item3 = new Item("ice cream");
     item3.setCategory(category);
-    Item item4 = new Item("hazard");
+    Item item4 = new Item("cad bury");
     item4.setCategory(category);
 
     testUtil.assertCreateAndSave(item1);
@@ -143,8 +143,8 @@ public class ItemIntegrationTest {
     testUtil.assertCreateAndSave(item3);
     testUtil.assertCreateAndSave(item4);
 
-    testUtil.assertListResultWithQuickSearch("fo", item1, item2);
-    testUtil.assertListResultWithQuickSearch("d", item1, item2, item3, item4);
+    testUtil.assertListResultWithQuickSearch("co", item1, item2);
+    testUtil.assertListResultWithQuickSearch("c", item1, item2, item3, item4);
     testUtil.assertListResultWithQuickSearch("xxxxx");
   }
 
@@ -279,6 +279,7 @@ public class ItemIntegrationTest {
         new Customization("updater", (actualValue, expectedValue) -> notNull(actualValue)),
         new Customization("deleteTime", (actualValue, expectedValue) -> ZonedDateTime.parse(actualValue.toString()).isAfter(item.getCreateTime().withZoneSameInstant(ZoneId.systemDefault()))),
         new Customization("deleteBy", (actualValue, expectedValue) -> notNull(actualValue)),
+        new Customization("category", (actualValue, expectedValue) -> notNull(actualValue))
     };
     testUtil.assertSingle(expectedResponse, actualResponse.getBody(), customizations);
   }

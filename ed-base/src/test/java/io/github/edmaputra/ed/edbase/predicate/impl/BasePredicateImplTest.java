@@ -1,4 +1,4 @@
-package io.github.edmaputra.ed.edbase.predicate;
+package io.github.edmaputra.ed.edbase.predicate.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;

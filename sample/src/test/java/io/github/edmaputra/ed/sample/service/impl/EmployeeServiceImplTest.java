@@ -9,7 +9,7 @@ import io.github.edmaputra.ed.edbase.model.Gender;
 import io.github.edmaputra.ed.edbase.model.MaritalStatus;
 import io.github.edmaputra.ed.sample.DataInit;
 import io.github.edmaputra.ed.sample.model.Employee;
-import io.github.edmaputra.ed.sample.predicate.EmployeePredicate;
+import io.github.edmaputra.ed.sample.predicate.impl.EmployeePredicateImpl;
 import io.github.edmaputra.ed.sample.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,6 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -45,7 +44,7 @@ class EmployeeServiceImplTest {
   private EmployeeRepository repository;
 
   @Mock
-  EmployeePredicate predicate;
+  EmployeePredicateImpl predicate;
 
   AuditorAware<String> auditorAware;
 

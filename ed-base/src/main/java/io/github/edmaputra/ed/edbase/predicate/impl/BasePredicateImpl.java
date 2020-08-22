@@ -1,4 +1,4 @@
-package io.github.edmaputra.ed.edbase.predicate;
+package io.github.edmaputra.ed.edbase.predicate.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -8,6 +8,7 @@ import com.querydsl.core.types.dsl.StringPath;
 import io.github.edmaputra.ed.edbase.annotation.FilterModel;
 import io.github.edmaputra.ed.edbase.annotation.Filterable;
 import io.github.edmaputra.ed.edbase.model.BaseEntity;
+import io.github.edmaputra.ed.edbase.predicate.BasePredicate;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;

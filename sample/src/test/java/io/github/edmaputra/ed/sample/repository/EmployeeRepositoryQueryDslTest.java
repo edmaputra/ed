@@ -3,7 +3,7 @@ package io.github.edmaputra.ed.sample.repository;
 import io.github.edmaputra.ed.edbase.predicate.BasePredicate;
 import io.github.edmaputra.ed.sample.DataInit;
 import io.github.edmaputra.ed.sample.model.Employee;
-import io.github.edmaputra.ed.sample.predicate.EmployeePredicate;
+import io.github.edmaputra.ed.sample.predicate.impl.EmployeePredicateImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ public class EmployeeRepositoryQueryDslTest {
   @BeforeEach
   void init() {
     data = new DataInit();
-    employeePredicate = new EmployeePredicate();
+    employeePredicate = new EmployeePredicateImpl();
     testEntityManager.persist(data.getEmployee(0));
     testEntityManager.persist(data.getEmployee(1));
     testEntityManager.persist(data.getEmployee(2));

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("/v1/employees")
 public class EmployeeController extends BaseController<Employee, UUID> {
 
   public EmployeeController(EmployeeService service) {

@@ -57,7 +57,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class EmployeeIntegrationTest {
 
-  private static final String EMPLOYEE_URL = "/employees/";
+  private static final String EMPLOYEE_URL = "/api/v1/employees/";
 
   @LocalServerPort
   private int port;
@@ -164,7 +164,7 @@ public class EmployeeIntegrationTest {
   @Order(10)
   public void givenId_whenGetById_thenDataNotFound() throws JSONException, JsonProcessingException {
     Map<String, List<String>> errors = new HashMap<>();
-    errors.put("error", Collections.singletonList("Data Not Found"));
+    errors.put("error", Collections.singletonList("Employee not found"));
     String expectedResponse = objectMapper.writeValueAsString(ResponseUtil.createExceptionResponse
         (errors, HttpStatus.NOT_FOUND).getBody());
     UUID id = UUID.randomUUID();
@@ -267,7 +267,7 @@ public class EmployeeIntegrationTest {
     HttpEntity<Employee> entity = new HttpEntity<>(updatedEmployee, headers);
 
     Map<String, List<String>> errors = new HashMap<>();
-    errors.put("error", Collections.singletonList("Data Not Found"));
+    errors.put("error", Collections.singletonList("Employee not found"));
     String expectedResponse = objectMapper.writeValueAsString(ResponseUtil.createExceptionResponse
         (errors, HttpStatus.NOT_FOUND).getBody());
 
@@ -322,7 +322,7 @@ public class EmployeeIntegrationTest {
     HttpEntity<Employee> entity = new HttpEntity<>(deleteEmployee, headers);
 
     Map<String, List<String>> errors = new HashMap<>();
-    errors.put("error", Collections.singletonList("Data Not Found"));
+    errors.put("error", Collections.singletonList("Employee not found"));
     String expectedResponse = objectMapper.writeValueAsString(ResponseUtil.createExceptionResponse
         (errors, HttpStatus.NOT_FOUND).getBody());
 

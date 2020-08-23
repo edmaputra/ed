@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/items")
+@RequestMapping("/v1/items")
 public class ItemController extends BaseController<Item, UUID> {
 
   public ItemController(ItemService service) {

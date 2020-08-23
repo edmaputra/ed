@@ -10,12 +10,14 @@ import io.github.edmaputra.ed.edbase.service.BaseService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.GenericTypeResolver;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 /**
  * {@inheritDoc}
@@ -24,15 +26,18 @@ public class BaseServiceImpl<T extends BaseIdEntity<ID>, ID extends Serializable
     implements BaseService<T, ID> {
 
   private static final String ENTITY_NULL_MESSAGES = "Entity that want to delete is Null";
+  private static final String ENTITY_NOT_FOUND_MESSAGES = " not found";
   private static final String[] IGNORED_PROPERTIES = new String[]{"creator", "createTime"};
   private final BaseRepository<T, ID> repository;
   private final BasePredicate<T> predicate;
+  private final Class<?> entityClass;
 
   private AuditorAware<String> auditorAware;
 
   public BaseServiceImpl(BaseRepository<T, ID> repository, BasePredicate<T> predicate) {
     this.repository = repository;
     this.predicate = predicate;
+    this.entityClass = Objects.requireNonNull(GenericTypeResolver.resolveTypeArguments(this.getClass(), BaseService.class))[0];
   }
 
   /**
@@ -60,7 +65,8 @@ public class BaseServiceImpl<T extends BaseIdEntity<ID>, ID extends Serializable
     if (id == null) {
       throw new CrudOperationException("ID is Null");
     }
-    return repository.findById(id).orElseThrow(DataNotFoundException::new);
+    return repository.findById(id).orElseThrow(
+        () -> new DataNotFoundException(this.entityClass.getSimpleName() + ENTITY_NOT_FOUND_MESSAGES));
   }
 
   /**

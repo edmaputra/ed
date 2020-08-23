@@ -53,7 +53,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CategoryIntegrationTest {
 
-  private static final String ENTITY_URL = "/categories/";
+  private static final String ENTITY_URL = "/api/v1/categories/";
 
   @LocalServerPort
   private int port;
@@ -129,7 +129,7 @@ public class CategoryIntegrationTest {
   @Order(10)
   public void givenId_whenGetById_thenDataNotFound() throws JSONException, JsonProcessingException {
     Map<String, List<String>> errors = new HashMap<>();
-    errors.put("error", Collections.singletonList("Data Not Found"));
+    errors.put("error", Collections.singletonList("Category not found"));
     String expectedResponse = objectMapper.writeValueAsString(ResponseUtil.createExceptionResponse
         (errors, HttpStatus.NOT_FOUND).getBody());
     UUID id = UUID.randomUUID();
@@ -219,7 +219,7 @@ public class CategoryIntegrationTest {
     HttpEntity<Category> entity = new HttpEntity<>(updatedEntity, headers);
 
     Map<String, List<String>> errors = new HashMap<>();
-    errors.put("error", Collections.singletonList("Data Not Found"));
+    errors.put("error", Collections.singletonList("Category not found"));
     String expectedResponse = objectMapper.writeValueAsString(ResponseUtil.createExceptionResponse
         (errors, HttpStatus.NOT_FOUND).getBody());
 
@@ -274,7 +274,7 @@ public class CategoryIntegrationTest {
     HttpEntity<Category> entity = new HttpEntity<>(deleteEntity, headers);
 
     Map<String, List<String>> errors = new HashMap<>();
-    errors.put("error", Collections.singletonList("Data Not Found"));
+    errors.put("error", Collections.singletonList("Category not found"));
     String expectedResponse = objectMapper.writeValueAsString(ResponseUtil.createExceptionResponse
         (errors, HttpStatus.NOT_FOUND).getBody());
 

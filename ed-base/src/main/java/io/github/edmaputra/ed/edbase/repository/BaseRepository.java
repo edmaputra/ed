@@ -1,7 +1,6 @@
 package io.github.edmaputra.ed.edbase.repository;
 
 import io.github.edmaputra.ed.edbase.model.BaseEntity;
-import io.github.edmaputra.ed.edbase.model.BaseIdEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,7 +20,7 @@ import java.util.Optional;
  * @since 0.0.1
  */
 @NoRepositoryBean
-public interface BaseRepository<T extends BaseIdEntity<ID>, ID extends Serializable> extends
+public interface BaseRepository<T, ID extends Serializable> extends
     JpaRepository<T, ID>,
     QuerydslPredicateExecutor<T> {
 

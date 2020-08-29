@@ -137,7 +137,12 @@ class EmployeeServiceImplTest {
   void givenE0Employee_whenAdd_thenReturnExpectedObject() throws CrudOperationException {
     doReturn(e0).when(repository).save(any(Employee.class));
 
-    Employee employee = service.add(e0);
+    Employee employee = null;
+    try {
+      employee = service.add(e0);
+    } catch (DataNotFoundException e) {
+      e.printStackTrace();
+    }
 
     assertThat(employee.getFirstName()).isEqualTo("Bangun");
     assertThat(employee.getMiddleName()).isEqualTo("Edma");

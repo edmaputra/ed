@@ -95,10 +95,26 @@ public class DataInitialization {
 
   //  @PostConstruct
   public void save() throws CrudOperationException {
-    service.add(e0);
-    service.add(e1);
-    service.add(e2);
-    service.add(e3);
+    try {
+      service.add(e0);
+    } catch (io.github.edmaputra.ed.edbase.exception.DataNotFoundException e) {
+      e.printStackTrace();
+    }
+    try {
+      service.add(e1);
+    } catch (io.github.edmaputra.ed.edbase.exception.DataNotFoundException e) {
+      e.printStackTrace();
+    }
+    try {
+      service.add(e2);
+    } catch (io.github.edmaputra.ed.edbase.exception.DataNotFoundException e) {
+      e.printStackTrace();
+    }
+    try {
+      service.add(e3);
+    } catch (io.github.edmaputra.ed.edbase.exception.DataNotFoundException e) {
+      e.printStackTrace();
+    }
   }
 
 }

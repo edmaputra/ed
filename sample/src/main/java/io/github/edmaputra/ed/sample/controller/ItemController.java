@@ -1,6 +1,6 @@
 package io.github.edmaputra.ed.sample.controller;
 
-import io.github.edmaputra.ed.edbase.controller.BaseController;
+import io.github.edmaputra.ed.edpos.controller.BaseItemController;
 import io.github.edmaputra.ed.sample.model.Item;
 import io.github.edmaputra.ed.sample.service.ItemService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/items")
-public class ItemController extends BaseController<Item, UUID> {
+public class ItemController extends BaseItemController<Item, UUID> {
 
   public ItemController(ItemService service) {
     super(service);

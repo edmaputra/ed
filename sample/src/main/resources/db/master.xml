@@ -28,6 +28,7 @@
   <include file="db/changelog/01_initial_schema.xml" relativeToChangelogFile="false"/>
   <include file="db/changelog/02_initial_schema_category.xml" relativeToChangelogFile="false"/>
   <include file="db/changelog/03_initial_schema_item.xml" relativeToChangelogFile="false"/>
+  <include file="db/changelog/04_initial_schema_item_detail.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
 

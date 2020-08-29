@@ -2,9 +2,7 @@ package io.github.edmaputra.ed.edbase.service;
 
 
 import io.github.edmaputra.ed.edbase.exception.CrudOperationException;
-import io.github.edmaputra.ed.edbase.exception.DataEmptyException;
 import io.github.edmaputra.ed.edbase.exception.DataNotFoundException;
-import io.github.edmaputra.ed.edbase.model.BaseIdEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,19 +17,18 @@ import java.io.Serializable;
  * @author edmaputra
  * @since 0.0.1
  */
-public interface BaseService<T extends BaseIdEntity<ID>, ID extends Serializable> {
+public interface BaseService<T, ID extends Serializable> {
 
   /**
    * Get all entities
    *
    * @param pageable pagination param
    * @return Collection of entities
-   * @throws DataEmptyException     when data is empty or not found
    * @throws CrudOperationException when something bad happen
    */
-  Page<T> get(Pageable pageable) throws DataEmptyException, CrudOperationException;
+  Page<T> get(Pageable pageable) throws CrudOperationException;
 
-  Page<T> get(Pageable pageable, String keyword) throws DataEmptyException, CrudOperationException;
+  Page<T> get(Pageable pageable, String keyword) throws CrudOperationException;
 
   /**
    * Get an entities by its id
@@ -50,7 +47,7 @@ public interface BaseService<T extends BaseIdEntity<ID>, ID extends Serializable
    * @return the entity that have added
    * @throws CrudOperationException when something bad happen
    */
-  T add(T t) throws CrudOperationException;
+  T add(T t) throws DataNotFoundException, CrudOperationException;
 
   /**
    * Update saved entity

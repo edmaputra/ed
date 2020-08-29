@@ -1,7 +1,6 @@
 package io.github.edmaputra.ed.edbase.service.impl;
 
 import io.github.edmaputra.ed.edbase.exception.CrudOperationException;
-import io.github.edmaputra.ed.edbase.exception.DataEmptyException;
 import io.github.edmaputra.ed.edbase.exception.DataNotFoundException;
 import io.github.edmaputra.ed.edbase.model.BaseIdEntity;
 import io.github.edmaputra.ed.edbase.predicate.BasePredicate;
@@ -44,17 +43,16 @@ public class BaseServiceImpl<T extends BaseIdEntity<ID>, ID extends Serializable
    * {@inheritDoc}
    */
   @Override
-  public Page<T> get(Pageable pageable) throws DataEmptyException, CrudOperationException {
+  public Page<T> get(Pageable pageable) throws CrudOperationException {
     return get(pageable, "");
   }
 
   @Override
-  public Page<T> get(Pageable pageable, String keyword) throws DataEmptyException, CrudOperationException {
+  public Page<T> get(Pageable pageable, String keyword) throws CrudOperationException {
     if (pageable == null) {
       throw new CrudOperationException("Pagination is Null");
     }
-    Page<T> tPage = repository.findAll(predicate.getPredicate(keyword), pageable);
-    return tPage;
+    return repository.findAll(predicate.getPredicate(keyword), pageable);
   }
 
   /**
@@ -73,7 +71,7 @@ public class BaseServiceImpl<T extends BaseIdEntity<ID>, ID extends Serializable
    * {@inheritDoc}
    */
   @Override
-  public T add(T t) throws CrudOperationException {
+  public T add(T t) throws DataNotFoundException, CrudOperationException {
     validate(t);
     return repository.save(t);
   }

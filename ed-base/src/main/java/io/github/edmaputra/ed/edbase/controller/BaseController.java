@@ -30,7 +30,7 @@ import java.io.Serializable;
  * @author edmaputra
  * @since 0.0.1
  */
-public class BaseController<T extends BaseIdEntity<ID>, ID extends Serializable> {
+public abstract class BaseController<T extends BaseIdEntity<ID>, ID extends Serializable> {
 
   private final BaseService<T, ID> service;
 
@@ -66,7 +66,7 @@ public class BaseController<T extends BaseIdEntity<ID>, ID extends Serializable>
    * @throws CrudOperationException when something bad happen
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<T> add(@Valid @RequestBody T t) throws CrudOperationException {
+  public ResponseEntity<T> add(@Valid @RequestBody T t) throws DataNotFoundException, CrudOperationException {
     T result = service.add(t);
     return new ResponseEntity<>(result, HttpStatus.CREATED);
   }

@@ -132,9 +132,8 @@ public class CategoryIntegrationTest {
     errors.put("error", Collections.singletonList("Category not found"));
     String expectedResponse = objectMapper.writeValueAsString(ResponseUtil.createExceptionResponse
         (errors, HttpStatus.NOT_FOUND).getBody());
-    UUID id = UUID.randomUUID();
 
-    ResponseEntity<String> actualResponse = restTemplate.getForEntity(url + id, String.class);
+    ResponseEntity<String> actualResponse = restTemplate.getForEntity(url + UUID.randomUUID(), String.class);
 
     assertThat(actualResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     JSONAssert.assertEquals(expectedResponse, actualResponse.getBody(), JSONCompareMode.LENIENT);

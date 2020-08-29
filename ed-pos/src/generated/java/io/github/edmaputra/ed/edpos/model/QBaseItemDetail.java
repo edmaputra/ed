@@ -7,15 +7,18 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
  * QBaseItemDetail is a Querydsl query type for BaseItemDetail
  */
 @Generated("com.querydsl.codegen.SupertypeSerializer")
-public class QBaseItemDetail extends EntityPathBase<BaseItemDetail<? extends java.io.Serializable>> {
+public class QBaseItemDetail extends EntityPathBase<BaseItemDetail<? extends BaseItem<?, ?>, ? extends java.io.Serializable>> {
 
     private static final long serialVersionUID = 958766364L;
+
+    private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QBaseItemDetail baseItemDetail = new QBaseItemDetail("baseItemDetail");
 
@@ -45,6 +48,8 @@ public class QBaseItemDetail extends EntityPathBase<BaseItemDetail<? extends jav
     //inherited
     public final SimplePath<java.io.Serializable> id = _super.id;
 
+    public final QBaseItem item;
+
     //inherited
     public final StringPath note = _super.note;
 
@@ -69,17 +74,26 @@ public class QBaseItemDetail extends EntityPathBase<BaseItemDetail<? extends jav
 
     @SuppressWarnings({"all", "rawtypes", "unchecked"})
     public QBaseItemDetail(String variable) {
-        super((Class) BaseItemDetail.class, forVariable(variable));
+        this((Class) BaseItemDetail.class, forVariable(variable), INITS);
     }
 
     @SuppressWarnings({"all", "rawtypes", "unchecked"})
     public QBaseItemDetail(Path<? extends BaseItemDetail> path) {
-        super((Class) path.getType(), path.getMetadata());
+        this((Class) path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+    }
+
+    public QBaseItemDetail(PathMetadata metadata) {
+        this(metadata, PathInits.getFor(metadata, INITS));
     }
 
     @SuppressWarnings({"all", "rawtypes", "unchecked"})
-    public QBaseItemDetail(PathMetadata metadata) {
-        super((Class) BaseItemDetail.class, metadata);
+    public QBaseItemDetail(PathMetadata metadata, PathInits inits) {
+        this((Class) BaseItemDetail.class, metadata, inits);
+    }
+
+    public QBaseItemDetail(Class<? extends BaseItemDetail<? extends BaseItem<?, ?>, ? extends java.io.Serializable>> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.item = inits.isInitialized("item") ? new QBaseItem(forProperty("item"), inits.get("item")) : null;
     }
 
 }

@@ -58,7 +58,7 @@ import static org.assertj.core.api.Assertions.assertThat;
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ItemIntegrationTest {
+public class ItemDetailIntegrationTest {
 
   private static final String ENTITY_URL = "/api/v1/items/";
   private static final String CATEGORY_URL = "/api/v1/categories/";

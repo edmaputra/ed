@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.core.types.dsl.StringPath;
 import io.github.edmaputra.ed.edbase.annotation.FilterModel;
 import io.github.edmaputra.ed.edbase.annotation.Filterable;
-import io.github.edmaputra.ed.edbase.model.BaseEntity;
 import io.github.edmaputra.ed.edbase.predicate.BasePredicate;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class BasePredicateImpl<T extends BaseEntity> implements BasePredicate<T> {
+public class BasePredicateImpl<T> implements BasePredicate<T> {
 
   private final Class<?> clazz;
   private final static Set NUMBER = new HashSet();
